@@ -1,31 +1,22 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-project (GPUImage)
+project(GPUImage)
 
-SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 find_package(OpenGLES2)
 find_package(GTest)
 
-if (GTEST_FOUND)
-    set (BUILD_TESTS_ENABLED_DEFAULT ON)
-else (GTEST_FOUND)
-    set (BUILD_TESTS_ENABLED_DEFAULT OFF)
-endif (GTEST_FOUND)
+include_directories(${EGL_INCLUDE_DIR} ${OPENGLES2_INCLUDE_DIR})
 
-option(BUILD_TESTS "Build the library tests" ${BUILD_TESTS_ENABLED_DEFAULT})
+###
+# Build Tests
+###
+add_subdirectory(tests)
 
-# If we build the tests, enable the testing subsystem
-if (BUILD_TESTS)
-    enable_testing ()
-    include_directories (${GTEST_INCLUDE_DIRS})
-    
-    # Add test cpp file
-    add_executable (runUnitTests framework/GPUImageTests/testgtest.cpp)
-    
-    # Link test executable against gtest & gtest_main
-    target_link_libraries (runUnitTests ${GTEST_BOTH_LIBRARIES})
-    add_test (runUnitTests runUnitTests)    
-endif (BUILD_TESTS)
+###
+# Build Examples
+###
+add_subdirectory(examples)
 
-#add_library (GPUImage STATIC main.cpp)
+add_library (GPUImage STATIC framework/Source/GPUImageOpenGLESContext.cpp)
