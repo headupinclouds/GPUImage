@@ -4,6 +4,7 @@
  * TODO: link against debug EGL libraries ( http://stackoverflow.com/questions/2209929/linking-different-libraries-for-debug-and-release-builds-in-cmake-on-windows )
  */
 #include "GPUImageOpenGLESContext.h"
+#include "GLProgram.h"
 
 GPUImageOpenGLESContext& GPUImageOpenGLESContext::sharedImageProcessingOpenGLESContext() {
 
@@ -11,6 +12,19 @@ GPUImageOpenGLESContext& GPUImageOpenGLESContext::sharedImageProcessingOpenGLESC
 
     // Instantiated on first use.
     return instance;
+}
+
+void GPUImageOpenGLESContext::setActiveShaderProgram(GLProgram* shaderProgram) {
+
+    // get an instance of the OpenGLES context
+    GPUImageOpenGLESContext& glesContext = GPUImageOpenGLESContext::sharedImageProcessingOpenGLESContext();
+    //EGLContext context = glesContext.getContext();
+
+    // update the active shader program
+    if (glesContext.getCurrentShaderProgram() != shaderProgram) {
+        glesContext.setCurrentShaderProgram(shaderProgram);
+        shaderProgram->use();
+    }
 }
 
 GLint GPUImageOpenGLESContext::maximumTextureSizeForThisDevice() {
@@ -52,6 +66,24 @@ gpu_float_size GPUImageOpenGLESContext::sizeThatFitsWithinATextureForSize(const 
     return adjustedSize;
 }
 
+GLProgram* GPUImageOpenGLESContext::programForVertexShaderString(const std::string& vertexShaderString, const std::string& fragmentShaderString) {
+    // TODO: caching mechanism
+
+    /*
+    NSString *lookupKeyForShaderProgram = [NSString stringWithFormat:@"V: %@ - F: %@", vertexShaderString, fragmentShaderString];
+    GLProgram *programFromCache = [shaderProgramCache objectForKey:lookupKeyForShaderProgram];
+
+    if (programFromCache == nil)
+    {
+        programFromCache = [[GLProgram alloc] initWithVertexShaderString:vertexShaderString fragmentShaderString:fragmentShaderString];
+        [shaderProgramCache setObject:programFromCache forKey:lookupKeyForShaderProgram];
+    }
+    
+    return programFromCache;
+    */
+    return NULL;
+}
+
 EGLContext GPUImageOpenGLESContext::getContext() {
 
     if (context_ == EGL_NO_CONTEXT) {
@@ -62,6 +94,10 @@ EGLContext GPUImageOpenGLESContext::getContext() {
     }
 
     return context_;
+}
+
+GLProgram* GPUImageOpenGLESContext::getCurrentShaderProgram() {
+    return currentShaderProgram;
 }
 
 void GPUImageOpenGLESContext::release() {
@@ -151,4 +187,8 @@ EGLBoolean GPUImageOpenGLESContext::initializeContext(EGLNativeDisplayType nativ
     glDisable(GL_DEPTH_TEST);
 
     return EGL_TRUE;
+}
+
+void GPUImageOpenGLESContext::setCurrentShaderProgram(GLProgram* shaderProgram) {
+    currentShaderProgram = shaderProgram;
 }

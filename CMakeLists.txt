@@ -19,5 +19,8 @@ add_subdirectory(tests)
 ###
 add_subdirectory(examples)
 
-add_library(GPUImage STATIC framework/Source/GPUImageOpenGLESContext.cpp)
+# Find all the input files
+FILE(GLOB GPUIMAGE_SOURCE_FILES RELATIVE "${CMAKE_SOURCE_DIR}" "${CMAKE_SOURCE_DIR}/framework/Source/*.cpp")
+	
+add_library(GPUImage STATIC ${GPUIMAGE_SOURCE_FILES})
 target_link_libraries(GPUImage ${EGL_LIBRARY} ${OPENGLES2_LIBRARY})
