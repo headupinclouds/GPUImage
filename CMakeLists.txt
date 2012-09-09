@@ -19,4 +19,5 @@ add_subdirectory(tests)
 ###
 add_subdirectory(examples)
 
-add_library (GPUImage STATIC framework/Source/GPUImageOpenGLESContext.cpp)
+add_library(GPUImage STATIC framework/Source/GPUImageOpenGLESContext.cpp)
+target_link_libraries(GPUImage ${EGL_LIBRARY} ${OPENGLES2_LIBRARY})

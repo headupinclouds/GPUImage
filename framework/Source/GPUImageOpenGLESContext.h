@@ -42,6 +42,7 @@ public:
     static bool supportsFastTextureUpload();
     
     EGLContext getContext();
+    void release();
     
 private:
 /*@property(readonly, retain, nonatomic) EAGLContext *context;
@@ -52,7 +53,11 @@ private:
     GPUImageOpenGLESContext(GPUImageOpenGLESContext const&);    // Don't Implement
     void operator=(GPUImageOpenGLESContext const&);             // Don't implement
     
-    EGLContext context;
+    EGLBoolean initializeContext(EGLNativeDisplayType nativeDisplay/*, EGLNativeWindowType nativeWindow*/);
+
+    EGLContext context_;
+    EGLDisplay display_;
+    EGLSurface surface_;
 };
 
 #endif // _GPUImageOpenGLESContext_h_
