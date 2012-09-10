@@ -68,20 +68,17 @@ gpu_float_size GPUImageOpenGLESContext::sizeThatFitsWithinATextureForSize(const 
 
 GLProgram* GPUImageOpenGLESContext::programForVertexShaderString(const std::string& vertexShaderString, const std::string& fragmentShaderString) {
     // TODO: caching mechanism
+    //NSString *lookupKeyForShaderProgram = [NSString stringWithFormat:@"V: %@ - F: %@", vertexShaderString, fragmentShaderString];
+    GLProgram *programFromCache = NULL; //TODO: = [shaderProgramCache objectForKey:lookupKeyForShaderProgram];
 
-    /*
-    NSString *lookupKeyForShaderProgram = [NSString stringWithFormat:@"V: %@ - F: %@", vertexShaderString, fragmentShaderString];
-    GLProgram *programFromCache = [shaderProgramCache objectForKey:lookupKeyForShaderProgram];
-
-    if (programFromCache == nil)
-    {
-        programFromCache = [[GLProgram alloc] initWithVertexShaderString:vertexShaderString fragmentShaderString:fragmentShaderString];
-        [shaderProgramCache setObject:programFromCache forKey:lookupKeyForShaderProgram];
+    // no cache hit, initialize a new shader program
+    if (programFromCache == NULL) {
+        programFromCache = new GLProgram();
+        programFromCache->initWithVertexShaderString(vertexShaderString, fragmentShaderString);
+        //TODO: [shaderProgramCache setObject:programFromCache forKey:lookupKeyForShaderProgram];
     }
     
     return programFromCache;
-    */
-    return NULL;
 }
 
 EGLContext GPUImageOpenGLESContext::getContext() {

@@ -12,21 +12,30 @@
 #include <string>
 #include <vector>
 
+typedef void (*GLInfoFunction)(GLuint program, GLenum pname,  GLint* params);
+typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
+
 // Use http://stackoverflow.com/questions/2795044/easy-framework-for-opengl-shaders-in-c-c ?
 class GLProgram { 
 public:
+    GLProgram();
+    ~GLProgram();
 
     int initWithVertexShaderString(const std::string& vertexShaderString, const std::string& fragmentShaderString);
     int initWithVertexShaderFilename(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename);
+    bool compileShader(GLuint& shader, GLenum type, const std::string& shaderString);
     void addAttribute(const std::string& attributeName);
     GLuint getAttributeIndex(const std::string& attributeName);
     GLuint getUniformIndex(const std::string& uniformName);
     bool link();
     void use();
+    void validate();
+    void destroy();
+
+    void logForOpenGLObject(std::string& log, GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc);
     void getVertexShaderLog(std::string& log);
     void getFragmentShaderLog(std::string& log);
     void getProgramLog(std::string& log);
-    void validate();
 
 private:
     bool initialized;
