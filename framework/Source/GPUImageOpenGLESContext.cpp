@@ -94,7 +94,7 @@ EGLContext GPUImageOpenGLESContext::getContext() {
 }
 
 GLProgram* GPUImageOpenGLESContext::getCurrentShaderProgram() {
-    return currentShaderProgram;
+    return currentShaderProgram_;
 }
 
 void GPUImageOpenGLESContext::release() {
@@ -187,5 +187,5 @@ EGLBoolean GPUImageOpenGLESContext::initializeContext(EGLNativeDisplayType nativ
 }
 
 void GPUImageOpenGLESContext::setCurrentShaderProgram(GLProgram* shaderProgram) {
-    currentShaderProgram = shaderProgram;
+    currentShaderProgram_ = shaderProgram;
 }

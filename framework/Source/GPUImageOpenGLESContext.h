@@ -61,7 +61,7 @@ private:
     EGLDisplay display_;
     EGLSurface surface_;
 
-    GLProgram*  currentShaderProgram;
+    GLProgram*  currentShaderProgram_;
 };
 
 #endif // _GPUImageOpenGLESContext_h_

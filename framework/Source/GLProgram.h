@@ -38,12 +38,12 @@ public:
     void getProgramLog(std::string& log);
 
 private:
-    bool initialized;
-    GLuint program;
-    GLuint vertexShader;
-    GLuint fragmentShader;
-    std::vector<std::string> attributes;
-    std::vector<std::string> uniforms;
+    bool initialized_;
+    GLuint program_;
+    GLuint vertexShader_;
+    GLuint fragmentShader_;
+    std::vector<std::string> attributes_;
+    std::vector<std::string> uniforms_;
 };
 
 #endif // _GLProgram_h_

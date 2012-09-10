@@ -6,7 +6,7 @@
 #include <algorithm>
 
 GLProgram::GLProgram() 
-    : initialized(false), program(NULL), vertexShader(NULL), fragmentShader(NULL) {
+    : initialized_(false), program_(NULL), vertexShader_(NULL), fragmentShader_(NULL) {
 
 }
 
@@ -16,23 +16,23 @@ GLProgram::~GLProgram() {
 
 int GLProgram::initWithVertexShaderString(const std::string& vertexShaderString, const std::string& fragmentShaderString) {
         
-    initialized = false;
+    initialized_ = false;
 
-    attributes.clear();
-    uniforms.clear();
-    program = glCreateProgram();
+    attributes_.clear();
+    uniforms_.clear();
+    program_ = glCreateProgram();
 
-    if (!compileShader(vertexShader, GL_VERTEX_SHADER, vertexShaderString)) {
+    if (!compileShader(vertexShader_, GL_VERTEX_SHADER, vertexShaderString)) {
         //NSLog(@"Failed to compile vertex shader");
     }
 
     // Create and compile fragment shader
-    if (!compileShader(fragmentShader, GL_FRAGMENT_SHADER, fragmentShaderString)) {
+    if (!compileShader(fragmentShader_, GL_FRAGMENT_SHADER, fragmentShaderString)) {
         //NSLog(@"Failed to compile fragment shader");
     }
 
-    glAttachShader(program, vertexShader);
-    glAttachShader(program, fragmentShader);
+    glAttachShader(program_, vertexShader_);
+    glAttachShader(program_, fragmentShader_);
 
     return 0;
 }
@@ -74,84 +74,84 @@ bool GLProgram::compileShader(GLuint& shader, GLenum type, const std::string& sh
 
 void GLProgram::addAttribute(const std::string& attributeName) {
 
-    std::vector<std::string>::const_iterator found = std::find(attributes.begin(), attributes.end(), attributeName); 
-    if (found == attributes.end()) {
+    std::vector<std::string>::const_iterator found = std::find(attributes_.begin(), attributes_.end(), attributeName); 
+    if (found == attributes_.end()) {
 
-        // the attribute was not found, add it to the end of attributes and bind it
-        attributes.push_back(attributeName);
+        // the attribute was not found, add it to the end of attributes_ and bind it
+        attributes_.push_back(attributeName);
 
-        size_t indexOfAttribute = attributes.size() - 1;
+        size_t indexOfAttribute = attributes_.size() - 1;
 
-        glBindAttribLocation(program, indexOfAttribute, attributeName.c_str());
+        glBindAttribLocation(program_, indexOfAttribute, attributeName.c_str());
     }
 }
 
 GLuint GLProgram::getAttributeIndex(const std::string& attributeName) {
 
     // TODO: take care of element not found?
-    std::vector<std::string>::const_iterator found = std::find(attributes.begin(), attributes.end(), attributeName); 
+    std::vector<std::string>::const_iterator found = std::find(attributes_.begin(), attributes_.end(), attributeName); 
 
-    return (found - attributes.begin());
+    return (found - attributes_.begin());
 }
 
 GLuint GLProgram::getUniformIndex(const std::string& uniformName) {
 
-    return glGetUniformLocation(program, uniformName.c_str());
+    return glGetUniformLocation(program_, uniformName.c_str());
 }
 
 bool GLProgram::link() {
 
     GLint status;
 
-    glLinkProgram(program);
+    glLinkProgram(program_);
 
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    glGetProgramiv(program_, GL_LINK_STATUS, &status);
     if (status == GL_FALSE)
         return false;
 
-    if (vertexShader) {
-        glDeleteShader(vertexShader);
-        vertexShader = 0;
+    if (vertexShader_) {
+        glDeleteShader(vertexShader_);
+        vertexShader_ = 0;
     }
 
-    if (fragmentShader) {
-        glDeleteShader(fragmentShader);
-        fragmentShader = 0;
+    if (fragmentShader_) {
+        glDeleteShader(fragmentShader_);
+        fragmentShader_ = 0;
     }
 
-    initialized = true;
+    initialized_ = true;
     
     return true;
 }
 
 void GLProgram::use() {
-    glUseProgram(program);
+    glUseProgram(program_);
 }
 
 void GLProgram::validate() {
 
     GLint logLength;
 
-    glValidateProgram(program);
-    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+    glValidateProgram(program_);
+    glGetProgramiv(program_, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength > 0) {
         GLchar *log = (GLchar *)malloc(logLength);
-        glGetProgramInfoLog(program, logLength, &logLength, log);
-        //NSLog(@"Program validate log:\n%s", log);
+        glGetProgramInfoLog(program_, logLength, &logLength, log);
+        //NSLog(@"program_ validate log:\n%s", log);
         free(log);
     }	
 }
 
 void GLProgram::destroy() {
     
-    if (vertexShader)
-        glDeleteShader(vertexShader);
+    if (vertexShader_)
+        glDeleteShader(vertexShader_);
 
-    if (fragmentShader)
-        glDeleteShader(fragmentShader);
+    if (fragmentShader_)
+        glDeleteShader(fragmentShader_);
 
-    if (program)
-        glDeleteProgram(program);
+    if (program_)
+        glDeleteProgram(program_);
 }
 
 void GLProgram::logForOpenGLObject(std::string& log, GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) {
@@ -170,15 +170,15 @@ void GLProgram::logForOpenGLObject(std::string& log, GLuint object, GLInfoFuncti
 
 void GLProgram::getVertexShaderLog(std::string& log) {
 
-    logForOpenGLObject(log, vertexShader, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+    logForOpenGLObject(log, vertexShader_, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
 
 void GLProgram::getFragmentShaderLog(std::string& log) {
 
-    logForOpenGLObject(log, fragmentShader, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+    logForOpenGLObject(log, fragmentShader_, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
 
 void GLProgram::getProgramLog(std::string& log) {
 
-    logForOpenGLObject(log, program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+    logForOpenGLObject(log, program_, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
