@@ -8,7 +8,8 @@
  #define _GPUImageInput_h_
  
  #include "Platform.h"
- 
+ #include "Common.h"
+
  class GPUImageInput {
  public:
     virtual void newFrameReadyAtTime(gpu_time frameTime, gpu_int textureIndex) = 0;

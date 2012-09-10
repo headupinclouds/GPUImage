@@ -8,21 +8,10 @@
 #define _GPUImageOpenGLESContext_h_
 
 #include "Platform.h"
+#include "Common.h"
 #include <GLES2/gl2.h>
 #include <EGL/egl.h>
 #include <string>
-
-#define GPUImageRotationSwapsWidthAndHeight(rotation) ((rotation) == kGPUImageRotateLeft || (rotation) == kGPUImageRotateRight || (rotation) == kGPUImageRotateRightFlipVertical)
-
-typedef enum { 
-    kGPUImageNoRotation, 
-    kGPUImageRotateLeft, 
-    kGPUImageRotateRight, 
-    kGPUImageFlipVertical, 
-    kGPUImageFlipHorizonal, 
-    kGPUImageRotateRightFlipVertical, 
-    kGPUImageRotate180 
-} GPUImageRotationMode;
 
 // Forward Declarations
 class GLProgram;
