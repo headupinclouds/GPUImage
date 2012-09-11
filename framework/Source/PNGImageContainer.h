@@ -8,7 +8,9 @@
 #define _PNGImageContainer_h_
  
 #include "ImageContainer.h"
-#include <string>
+
+// forward declarations
+struct FIBITMAP;
 
 class PNGImageContainer : public ImageContainer {
 public:
@@ -20,9 +22,21 @@ public:
 
     gpu_int getWidth() const;
     gpu_int getHeight() const;
-    void getRawBytes(char* destination);
+    gpu_int getBitsPerPixel() const;
+    gpu_int getFormat() const;
+    void resize(gpu_int width, gpu_int height);
+    unsigned char* getRawBytes() const;
+
+    void destroy();
 
 private:
+    gpu_int width_;
+    gpu_int height_;
+    gpu_int bitsPerPixel_;
+    gpu_int imageFormat_;
+
+    unsigned char* data_;
+    FIBITMAP* dib_;
 };
  
 #endif // _PNGImageContainer_h_

@@ -22,8 +22,7 @@ GPUImagePicture::~GPUImagePicture() {
 
 bool GPUImagePicture::initialize(ImageContainer* imageSource, bool smoothlyScaleOutput) {
 
-    if (!textureForOutput())
-    {
+    if (!textureForOutput()) {
         return false;
     }
 
@@ -37,7 +36,8 @@ bool GPUImagePicture::initialize(ImageContainer* imageSource, bool smoothlyScale
 
     gpu_float_size pixelSizeToUseForTexture = pixelSizeOfImage_;
 
-    bool shouldRedrawUsingCoreGraphics = true;
+    // should be default false ?
+    bool shouldRedrawUsingCoreGraphics = false;
 
     // For now, deal with images larger than the maximum texture size by resizing to be within that limit
     gpu_float_size scaledImageSizeToFitOnGPU = GPUImageOpenGLESContext::sizeThatFitsWithinATextureForSize(pixelSizeOfImage_);
@@ -60,20 +60,16 @@ bool GPUImagePicture::initialize(ImageContainer* imageSource, bool smoothlyScale
 
     GLubyte* imageData = NULL;
 
-    if (shouldRedrawUsingCoreGraphics)
-    {
-        // TODO: RESIZE!
-/*
+    if (shouldRedrawUsingCoreGraphics) {
         // For resized image, redraw
-        imageData = (GLubyte *) calloc(1, (int)pixelSizeToUseForTexture.width * (int)pixelSizeToUseForTexture.height * 4);
+        imageSource->resize((int)pixelSizeToUseForTexture.width, (int)pixelSizeToUseForTexture.height);
 
-        imageSource->getRawBytes((char*)imageData);
-*/
+        imageData = imageSource->getRawBytes();
     }
     else
     {
         // Access the raw image bytes directly
-        imageSource->getRawBytes((char*)imageData);
+        imageData = imageSource->getRawBytes();
     }    
 
 
@@ -106,29 +102,27 @@ bool GPUImagePicture::initialize(ImageContainer* imageSource, bool smoothlyScale
     GPUImageOpenGLESContext::useImageProcessingContext();
 
     glBindTexture(GL_TEXTURE_2D, textureForOutput());
-    if (shouldSmoothlyScaleOutput())
-    {
+    if (shouldSmoothlyScaleOutput()) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     }
     
     // looks like GL_BGRA is non standard
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)pixelSizeToUseForTexture.width, (int)pixelSizeToUseForTexture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+    glTexImage2D(GL_TEXTURE_2D, 0, imageSource->getFormat(), (int)pixelSizeToUseForTexture.width, 
+        (int)pixelSizeToUseForTexture.height, 0, imageSource->getFormat(), GL_UNSIGNED_BYTE, imageData);
 
-    if (shouldSmoothlyScaleOutput())
-    {
+    if (shouldSmoothlyScaleOutput()) {
         glGenerateMipmap(GL_TEXTURE_2D);
     }        
     // End runSynchronouslyOnVideoProcessingQueue block
 
-    if (shouldRedrawUsingCoreGraphics)
-    {
+    // imageData belongs to imageSource which will take care of it!
+    /*   if (shouldRedrawUsingCoreGraphics) {
         free(imageData);
     }
     else
     {
-        // TODO: should we free data returned from imageSource->getRawBytes ?
-        //CFRelease(dataFromImageDataProvider);
-    }
+        CFRelease(dataFromImageDataProvider);
+    }*/
 
     return true;
 }

@@ -13,11 +13,11 @@ int main (int argc, char** argv) {
     std::cout << "maximumTextureUnitsForThisDevice(): " << glesContext.maximumTextureUnitsForThisDevice() << std::endl;
     glesContext.release();
 
-    PNGImageContainer* imageSource = new PNGImageContainer("test.png");
+    PNGImageContainer* imageSource = new PNGImageContainer("mask.png");
 
     GPUImagePicture* imageToProcess = new GPUImagePicture();
     if (imageToProcess)
-        imageToProcess->initialize(imageSource, false);
+        imageToProcess->initialize(imageSource, true);
 
     return 0;
 } 
