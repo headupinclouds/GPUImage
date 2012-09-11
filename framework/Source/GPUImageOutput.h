@@ -28,7 +28,7 @@ class GPUImageInput;
 class GPUImageOutput {
 public:
     GPUImageOutput();
-    ~GPUImageOutput();
+    virtual ~GPUImageOutput();
 
     void setInputTextureForTarget(GPUImageInput* target, gpu_int inputTextureIndex);
     GLuint textureForOutput();
@@ -54,7 +54,7 @@ public:
      
      @param newTarget Target to be added
      */
-    void addTarget(GPUImageInput* newTarget, gpu_int textureLocation);
+    virtual void addTarget(GPUImageInput* newTarget, gpu_int textureLocation);
 
     /** Removes a target. The target will no longer receive notifications when new frames are available.
      
@@ -82,14 +82,15 @@ public:
 
     void destroy();
 
-private:
+protected:
     std::vector<GPUImageInput*> targets_;
     std::vector<GLuint> targetTextureIndices_;
-    
+
+private:
     GLuint outputTexture_;
-    gpu_float_size inputTextureSize;
-    gpu_float_size cachedMaximumOutputSize;
-    gpu_float_size forcedMaximumSize;
+    gpu_float_size inputTextureSize_;
+    gpu_float_size cachedMaximumOutputSize_;
+    gpu_float_size forcedMaximumSize_;
     
     bool overrideInputSize_;
 
@@ -100,7 +101,7 @@ private:
     // TODO: void(^frameProcessingCompletionBlock)(GPUImageOutput*, CMTime);
 };
 
-#ifdef portenabled
+#ifdef portcode
 
 /// @name Still image processing
 

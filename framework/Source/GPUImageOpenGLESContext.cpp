@@ -14,6 +14,18 @@ GPUImageOpenGLESContext& GPUImageOpenGLESContext::sharedImageProcessingOpenGLESC
     return instance;
 }
 
+void GPUImageOpenGLESContext::useImageProcessingContext() {
+    // get an instance of the OpenGLES context
+    GPUImageOpenGLESContext& glesContext = GPUImageOpenGLESContext::sharedImageProcessingOpenGLESContext();
+    EGLContext context = glesContext.getContext();
+
+    EGLContext currentContext = eglGetCurrentContext();
+
+    if (currentContext != context) {
+        glesContext.makeCurrent();
+    }
+}
+
 void GPUImageOpenGLESContext::setActiveShaderProgram(GLProgram* shaderProgram) {
 
     // get an instance of the OpenGLES context
@@ -184,6 +196,13 @@ EGLBoolean GPUImageOpenGLESContext::initializeContext(EGLNativeDisplayType nativ
     glDisable(GL_DEPTH_TEST);
 
     return EGL_TRUE;
+}
+
+void GPUImageOpenGLESContext::makeCurrent() {
+    EGLBoolean result = eglMakeCurrent(display_, surface_, surface_, context_);
+    if (result == EGL_FALSE) {
+        // TODO: log errors
+    }
 }
 
 void GPUImageOpenGLESContext::setCurrentShaderProgram(GLProgram* shaderProgram) {

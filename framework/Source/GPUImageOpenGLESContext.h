@@ -44,6 +44,7 @@ private:
     void operator=(GPUImageOpenGLESContext const&);             // Don't implement
     
     EGLBoolean initializeContext(EGLNativeDisplayType nativeDisplay/*, EGLNativeWindowType nativeWindow*/);
+    void makeCurrent();
     void setCurrentShaderProgram(GLProgram* shaderProgram);
 
     EGLContext context_;
