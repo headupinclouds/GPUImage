@@ -11,9 +11,9 @@
 
 class ImageContainer {
 public:
-    virtual gpu_int getWidth() const;
-    virtual gpu_int getHeight() const;
-    virtual void getRawBytes(char* destination);
+    virtual gpu_int getWidth() const = 0;
+    virtual gpu_int getHeight() const = 0;
+    virtual void getRawBytes(char* destination) = 0;
 };
  
 #endif // _ImageContainer_h_
