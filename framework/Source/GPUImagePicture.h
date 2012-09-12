@@ -19,6 +19,7 @@ public:
     void processImage();
     gpu_float_size getOutputImageSize();
 
+    using GPUImageOutput::addTarget;
     void addTarget(GPUImageInput* newTarget, gpu_int textureLocation);
 
 private:

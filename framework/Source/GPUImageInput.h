@@ -4,14 +4,15 @@
  *
  */
  
- #ifndef _GPUImageInput_h_
- #define _GPUImageInput_h_
+#ifndef _GPUImageInput_h_
+#define _GPUImageInput_h_
  
- #include "Platform.h"
- #include "Common.h"
+#include "Platform.h"
+#include "Common.h"
+#include <GLES2/gl2.h>
 
- class GPUImageInput {
- public:
+class GPUImageInput {
+public:
     virtual void newFrameReadyAtTime(gpu_time frameTime, gpu_int textureIndex) = 0;
     virtual void setInputTexture(GLuint newInputTexture, gpu_int textureIndex) = 0;
     virtual gpu_int nextAvailableTextureIndex() = 0;

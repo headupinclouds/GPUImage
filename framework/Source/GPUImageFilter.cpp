@@ -7,6 +7,7 @@
 #include "GPUImageFilter.h"
 #include "GPUImageOpenGLESContext.h"
 #include "GLProgram.h"
+#include "FreeImage.h"  // TODO: remove, just for debug purposes
 
 // Hardcode the vertex shader for standard filters, but this can be overridden
 const std::string GPUImageFilter::kGPUImageVertexShaderString("\
@@ -33,7 +34,7 @@ const std::string GPUImageFilter::kGPUImagePassthroughFragmentShaderString("\
     }"
 );
 
-GPUImageFilter::GPUImageFilter() {
+GPUImageFilter::GPUImageFilter() : shouldIgnoreUpdatesToThisTarget_(false) {
 
 }
 
@@ -122,6 +123,8 @@ void GPUImageFilter::initWithVertexShaderFromString(const std::string& vertexSha
     glEnableVertexAttribArray(filterPositionAttribute_);
     glEnableVertexAttribArray(filterTextureCoordinateAttribute_);    
     // End runSynchronouslyOnVideoProcessingQueue block
+
+    setEnabled(true);
 }
 
 void GPUImageFilter::initWithFragmentShaderFromString(const std::string& fragmentShaderString) {
@@ -559,6 +562,17 @@ void GPUImageFilter::renderToTextureWithVertices(const GLfloat* vertices, const 
     glVertexAttribPointer(filterTextureCoordinateAttribute_, 2, GL_FLOAT, 0, 0, textureCoordinates);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    // TODO: Remove this debug code
+    gpu_float_size currentFBOSize = sizeOfFBO();
+    size_t totalBytesForImage = (int)currentFBOSize.width * (int)currentFBOSize.height * 4;
+    GLubyte *rawImagePixels2 = (GLubyte *)malloc(totalBytesForImage);
+    glReadPixels(0, 0, (int)currentFBOSize.width, (int)currentFBOSize.height, GL_RGBA, GL_UNSIGNED_BYTE, rawImagePixels2);
+    FIBITMAP* bmp = FreeImage_ConvertFromRawBits(rawImagePixels2, (int)currentFBOSize.width, (int)currentFBOSize.height, 
+        4 * (int)currentFBOSize.width, 32, 0xFF0000, 0x00FF00, 0x0000FF, false);
+    FreeImage_Save(FIF_PNG, bmp, "ImageFilterDump.png" , 0);
+
+
 }
 
 void GPUImageFilter::setUniformsForProgramAtIndex(gpu_uint programIndex) {
@@ -801,4 +815,20 @@ void GPUImageFilter::endProcessing() {
         GPUImageInput* currentTarget = targets_[k];
         currentTarget->endProcessing();
     }
+}
+
+bool GPUImageFilter::shouldIgnoreUpdatesToThisTarget() {
+    return shouldIgnoreUpdatesToThisTarget_;
+}
+
+void GPUImageFilter::setShouldIgnoreUpdatesToThisTarget(bool ignore) {
+    shouldIgnoreUpdatesToThisTarget_ = ignore;
+}
+
+bool GPUImageFilter::enabled() {
+    return enabled_;
+}
+
+void GPUImageFilter::setEnabled(bool enable) {
+    enabled_ = enable;
 }

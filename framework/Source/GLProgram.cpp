@@ -14,7 +14,7 @@ GLProgram::~GLProgram() {
     destroy();
 }
 
-int GLProgram::initWithVertexShaderString(const std::string& vertexShaderString, const std::string& fragmentShaderString) {
+bool GLProgram::initWithVertexShaderString(const std::string& vertexShaderString, const std::string& fragmentShaderString) {
         
     initialized_ = false;
 
@@ -24,21 +24,23 @@ int GLProgram::initWithVertexShaderString(const std::string& vertexShaderString,
 
     if (!compileShader(vertexShader_, GL_VERTEX_SHADER, vertexShaderString)) {
         //NSLog(@"Failed to compile vertex shader");
+        return false;
     }
 
     // Create and compile fragment shader
     if (!compileShader(fragmentShader_, GL_FRAGMENT_SHADER, fragmentShaderString)) {
         //NSLog(@"Failed to compile fragment shader");
+        return false;
     }
 
     glAttachShader(program_, vertexShader_);
     glAttachShader(program_, fragmentShader_);
 
-    return 0;
+    return true;
 }
 
-int GLProgram::initWithVertexShaderFilename(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename) {
-    return 0;
+bool GLProgram::initWithVertexShaderFilename(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename) {
+    return false;
 }
 
 bool GLProgram::compileShader(GLuint& shader, GLenum type, const std::string& shaderString) {

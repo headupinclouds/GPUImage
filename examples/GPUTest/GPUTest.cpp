@@ -2,6 +2,7 @@
 #include "GPUImageOpenGLESContext.h"
 #include "GPUImagePicture.h"
 #include "PNGImageContainer.h"
+#include "GPUImageGrayScaleFilter.h"
 
 int main (int argc, char** argv) {
     std::cout << "GPUImage EGL Context Example" << std::endl;
@@ -14,10 +15,30 @@ int main (int argc, char** argv) {
     glesContext.release();
 
     PNGImageContainer* imageSource = new PNGImageContainer("mask.png");
+    if (!imageSource)
+        return -1;
 
     GPUImagePicture* imageToProcess = new GPUImagePicture();
-    if (imageToProcess)
-        imageToProcess->initialize(imageSource, true);
+    if (!imageToProcess)
+        return -1;
+
+    if (!imageToProcess->initialize(imageSource, true)) {
+        delete imageToProcess;
+        delete imageSource;
+
+        return -1;
+    }
+
+    GPUImageGrayscaleFilter* grayscaleFilter = new GPUImageGrayscaleFilter();
+    if (!grayscaleFilter) {
+        delete imageToProcess;
+        delete imageSource;
+
+        return -1;
+    }
+
+    imageToProcess->addTarget(grayscaleFilter);
+    imageToProcess->processImage();
 
     return 0;
 } 

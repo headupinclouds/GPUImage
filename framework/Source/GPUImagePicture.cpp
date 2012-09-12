@@ -141,7 +141,9 @@ void GPUImagePicture::processImage() {
         gpu_int textureIndexOfTarget = targetTextureIndices_[k];
            
         currentTarget->setInputSize(pixelSizeOfImage_, textureIndexOfTarget);
-        //TODO: currentTarget->newFrameReadyAtTime(kCMTimeIndefinite, textureIndexOfTarget);
+
+        gpu_time todoTiming;    // TODO: put some correct time in there?
+        currentTarget->newFrameReadyAtTime(todoTiming, textureIndexOfTarget);
     }   
 }
 
@@ -151,10 +153,12 @@ gpu_float_size GPUImagePicture::getOutputImageSize() {
 
 void GPUImagePicture::addTarget(GPUImageInput* newTarget, gpu_int textureLocation) {
     
-    GPUImageOutput::addTarget(newTarget);
+    GPUImageOutput::addTarget(newTarget, textureLocation);
 
     if (hasProcessedImage_) {
         newTarget->setInputSize(pixelSizeOfImage_, textureLocation);
-        //newTarget->newFrameReadyAtTime(kCMTimeIndefinite, textureLocation);
+
+        gpu_time todoTiming;    // TODO: put some correct time in there?
+        newTarget->newFrameReadyAtTime(todoTiming, textureLocation);
     }
 }

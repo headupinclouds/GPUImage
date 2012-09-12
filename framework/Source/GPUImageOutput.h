@@ -46,7 +46,7 @@ public:
      
      @param newTarget Target to be added
      */
-    void addTarget(GPUImageInput* newTarget);
+    virtual void addTarget(GPUImageInput* newTarget);
 
     /** Adds a target to receive notifications when new frames are available.
      

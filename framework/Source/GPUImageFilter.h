@@ -50,10 +50,10 @@ class GLProgram;
  
  Filters and other subsequent elements in the chain conform to the GPUImageInput protocol, which lets them take in the supplied or processed texture from the previous link in the chain and do something with it. Objects one step further down the chain are considered targets, and processing can be branched by adding multiple targets to a single output or filter.
  */
-class GPUImageFilter : public GPUImageOutput, GPUImageInput {
+class GPUImageFilter : public GPUImageOutput, public GPUImageInput {
 public:
     GPUImageFilter();
-    ~GPUImageFilter();
+    virtual ~GPUImageFilter();
 
     /// @name Initialization and teardown
 
@@ -134,6 +134,11 @@ public:
     gpu_float_size maximumOutputSize();
     void endProcessing();
 
+    bool shouldIgnoreUpdatesToThisTarget();
+    void setShouldIgnoreUpdatesToThisTarget(bool ignore);
+    bool enabled();
+    void setEnabled(bool enable);
+
     static const std::string kGPUImageVertexShaderString;
     static const std::string kGPUImagePassthroughFragmentShaderString;
 
@@ -159,6 +164,9 @@ private:
 
     //CVPixelBufferRef renderTarget_;
     bool preventRendering_;
+
+    bool shouldIgnoreUpdatesToThisTarget_;
+    bool enabled_;
 };
 
 #endif // _GPUImageFilter_h_
