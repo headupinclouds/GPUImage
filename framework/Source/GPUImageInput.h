@@ -20,7 +20,7 @@
     virtual gpu_float_size maximumOutputSize() = 0;
     virtual void endProcessing() = 0;
     virtual bool shouldIgnoreUpdatesToThisTarget() = 0;
-    virtual bool enabled () = 0;
+    virtual bool enabled() = 0;
 };
 
 #endif // _GPUImageInput_h_

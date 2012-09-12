@@ -182,3 +182,7 @@ void GLProgram::getProgramLog(std::string& log) {
 
     logForOpenGLObject(log, program_, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
+
+bool GLProgram::isInitialized() const {
+    return initialized_;
+}

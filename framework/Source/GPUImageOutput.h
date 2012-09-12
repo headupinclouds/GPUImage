@@ -86,18 +86,21 @@ protected:
     std::vector<GPUImageInput*> targets_;
     std::vector<GLuint> targetTextureIndices_;
 
-private:
+    gpu_float_size forcedMaximumSize_;
+
     GLuint outputTexture_;
+    bool overrideInputSize_;
     gpu_float_size inputTextureSize_;
     gpu_float_size cachedMaximumOutputSize_;
-    gpu_float_size forcedMaximumSize_;
+
+    GPUImageInput* targetToIgnoreForUpdates_;
+
+private:
     
-    bool overrideInputSize_;
 
     bool shouldSmoothlyScaleOutput_;
     bool shouldIgnoreUpdatesToThisTarget_;
     //TODO: GPUImageMovieWriter *audioEncodingTarget;
-    GPUImageInput* targetToIgnoreForUpdates_;
     // TODO: void(^frameProcessingCompletionBlock)(GPUImageOutput*, CMTime);
 };
 

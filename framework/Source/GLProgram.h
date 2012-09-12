@@ -37,6 +37,8 @@ public:
     void getFragmentShaderLog(std::string& log);
     void getProgramLog(std::string& log);
 
+    bool isInitialized() const;
+
 private:
     bool initialized_;
     GLuint program_;

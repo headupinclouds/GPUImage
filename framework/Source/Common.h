@@ -20,6 +20,7 @@ typedef enum {
 } GPUImageRotationMode;
 
 #define FloatSizeEqualToSize(s1,s2) (((s1).width == (s2).width) && ((s1).height == (s2).height))
+#define FloatSizeEqualToZero(s1) (((s1).width == 0.0f) && ((s1).height == 0.0f))
 
 // math stuff
 #define LOG2 0.30102999566398119521373889472449
