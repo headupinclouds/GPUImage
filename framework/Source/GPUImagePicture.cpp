@@ -12,8 +12,10 @@
 #include <math.h>
 
 GPUImagePicture::GPUImagePicture() 
-    : GPUImageOutput() {
+    : GPUImageOutput(), hasProcessedImage_(false) {
 
+    pixelSizeOfImage_.width = 0.0f;
+    pixelSizeOfImage_.height = 0.0f;
 }
 
 GPUImagePicture::~GPUImagePicture() {

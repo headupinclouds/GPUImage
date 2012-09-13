@@ -34,22 +34,28 @@ bool PNGImageContainer::load(const std::string& fileName) {
 
     // we keep the DIB in memory to allow the resize
     FREE_IMAGE_FORMAT format = FreeImage_GetFileType(fileName.c_str());
-    dib_ = FreeImage_Load(format, fileName.c_str());
+    FIBITMAP* originalImage = FreeImage_Load(format, fileName.c_str());
+
+    // convert to 32 bits
+	dib_ = FreeImage_ConvertTo32Bits(originalImage);
+	FreeImage_Unload(originalImage);
+
     FREE_IMAGE_COLOR_TYPE type = FreeImage_GetColorType(dib_);
 
     width_ = FreeImage_GetWidth(dib_);
     height_ = FreeImage_GetHeight(dib_);
     bitsPerPixel_ = FreeImage_GetBPP(dib_) / 8;
 
-
-    switch(type) {
+    // TODO: should this always report FIC_RGBALPHA because of the ConvertTo32Bits?
+    /*switch(type) {
         case FIC_RGBALPHA:
             imageFormat_ = GL_RGBA;
             break;
         case FIC_RGB:
             imageFormat_ = GL_RGB;
             break;
-    }
+    }*/
+    imageFormat_ = GL_RGBA;
 
     size_t bufferSize = width_ * height_ * bitsPerPixel_;
 
@@ -57,6 +63,10 @@ bool PNGImageContainer::load(const std::string& fileName) {
     data_ = new BYTE[bufferSize];
 
     memcpy(data_, imageData, bufferSize);
+
+    /*FIBITMAP* bmp = FreeImage_ConvertFromRawBits(data_, (int)width_, (int)height_,  bitsPerPixel_ * (int)width_, bitsPerPixel_ * 8, 0xFF0000, 0x00FF00, 0x0000FF, false);
+    FreeImage_Save(FIF_PNG, bmp, "PNGImageContainerData.png" , 0);
+    FreeImage_Save(FIF_PNG, dib_, "PNGImageContainerData_Original.png" , 0);*/
     
     return true;
 }

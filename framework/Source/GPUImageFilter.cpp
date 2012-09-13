@@ -34,7 +34,15 @@ const std::string GPUImageFilter::kGPUImagePassthroughFragmentShaderString("\
     }"
 );
 
-GPUImageFilter::GPUImageFilter() : shouldIgnoreUpdatesToThisTarget_(false) {
+GPUImageFilter::GPUImageFilter() 
+    : filterSourceTexture_(0), filterFramebuffer_(0), filterProgram_(NULL), filterPositionAttribute_(0),
+    filterTextureCoordinateAttribute_(0), filterInputTextureUniform_(0), backgroundColorRed_(0.0f), 
+    backgroundColorGreen_(0.0f), backgroundColorBlue_(0.0f), backgroundColorAlpha_(0.0f), 
+    preparedToCaptureImage_(false), inputRotation_(kGPUImageNoRotation), preventRendering_(false),
+    shouldIgnoreUpdatesToThisTarget_(false), enabled_(false) {
+
+    currentFilterSize_.width = 0.0f;
+    currentFilterSize_.height = 0.0f;
 
 }
 
@@ -43,14 +51,6 @@ GPUImageFilter::~GPUImageFilter() {
 }
 
 void GPUImageFilter::initWithVertexShaderFromString(const std::string& vertexShaderString, const std::string& fragmentShaderString) {
-
-    preparedToCaptureImage_ = false;
-    preventRendering_ = false;
-    inputRotation_ = kGPUImageNoRotation;
-    backgroundColorRed_ = 0.;
-    backgroundColorGreen_ = 0.;
-    backgroundColorBlue_ = 0.;
-    backgroundColorAlpha_ = 0.;
 
     // TODO: schedules that block job in the thread which owns the gles context and waits for its completition
     // TODO: Was run in a runSynchronouslyOnVideoProcessingQueue block
@@ -569,7 +569,7 @@ void GPUImageFilter::renderToTextureWithVertices(const GLfloat* vertices, const 
     GLubyte *rawImagePixels2 = (GLubyte *)malloc(totalBytesForImage);
     glReadPixels(0, 0, (int)currentFBOSize.width, (int)currentFBOSize.height, GL_RGBA, GL_UNSIGNED_BYTE, rawImagePixels2);
     FIBITMAP* bmp = FreeImage_ConvertFromRawBits(rawImagePixels2, (int)currentFBOSize.width, (int)currentFBOSize.height, 
-        4 * (int)currentFBOSize.width, 32, 0xFF0000, 0x00FF00, 0x0000FF, false);
+        4 * (int)currentFBOSize.width, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
     FreeImage_Save(FIF_PNG, bmp, "ImageFilterDump.png" , 0);
 
 

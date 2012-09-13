@@ -3,7 +3,18 @@
 #include "GPUImageOpenGLESContext.h"
 #include <algorithm>
 
-GPUImageOutput::GPUImageOutput() {
+GPUImageOutput::GPUImageOutput() 
+    : outputTexture_(0), overrideInputSize_(false), targetToIgnoreForUpdates_(NULL) {
+
+    forcedMaximumSize_.width = 0.0f;
+    forcedMaximumSize_.height = 0.0f;
+
+    inputTextureSize_.width = 0.0f;
+    inputTextureSize_.height = 0.0f;
+
+    cachedMaximumOutputSize_.width = 0.0f;
+    cachedMaximumOutputSize_.height = 0.0f;
+
     initializeOutputTexture();
 }
 
