@@ -63,10 +63,6 @@ bool PNGImageContainer::load(const std::string& fileName) {
     data_ = new BYTE[bufferSize];
 
     memcpy(data_, imageData, bufferSize);
-
-    /*FIBITMAP* bmp = FreeImage_ConvertFromRawBits(data_, (int)width_, (int)height_,  bitsPerPixel_ * (int)width_, bitsPerPixel_ * 8, 0xFF0000, 0x00FF00, 0x0000FF, false);
-    FreeImage_Save(FIF_PNG, bmp, "PNGImageContainerData.png" , 0);
-    FreeImage_Save(FIF_PNG, dib_, "PNGImageContainerData_Original.png" , 0);*/
     
     return true;
 }
@@ -87,11 +83,11 @@ gpu_int PNGImageContainer::getFormat() const {
     return imageFormat_;
 }
 
-void PNGImageContainer::resize(gpu_int width, gpu_int height) {
+bool PNGImageContainer::resize(gpu_int width, gpu_int height) {
 
     FIBITMAP* resizedDib = FreeImage_Rescale(dib_, width, height, FILTER_BILINEAR);
     if (resizedDib == NULL)
-        return;
+        return false;
 
     // delete old stuff
     destroy();
@@ -107,6 +103,8 @@ void PNGImageContainer::resize(gpu_int width, gpu_int height) {
     data_ = new BYTE[bufferSize];
 
     memcpy(data_, imageData, bufferSize);
+
+    return true;
 }
 
 unsigned char* PNGImageContainer::getRawBytes() const  {

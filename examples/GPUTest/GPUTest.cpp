@@ -18,7 +18,7 @@ int main (int argc, char** argv) {
     if (!imageSource)
         return -1;
 
-    if (!imageSource->load("mask.png")) {
+    if (!imageSource->load("test.png")) {
         delete imageSource;
 
         return -1;

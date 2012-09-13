@@ -63,7 +63,7 @@ bool GPUImagePicture::initialize(ImageContainer* imageSource, bool smoothlyScale
     GLubyte* imageData = NULL;
 
     if (shouldRedrawUsingCoreGraphics) {
-        // For resized image, redraw
+        // resize the image
         imageSource->resize((int)pixelSizeToUseForTexture.width, (int)pixelSizeToUseForTexture.height);
 
         imageData = imageSource->getRawBytes();

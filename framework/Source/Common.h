@@ -23,7 +23,7 @@ typedef enum {
 #define FloatSizeEqualToZero(s1) (((s1).width == 0.0f) && ((s1).height == 0.0f))
 
 // math stuff
-#define LOG2 0.30102999566398119521373889472449
+#define LOG2 0.69314718055994529
 #define log2(x) (log(x)/LOG2)
 
 #endif // _Common_h_

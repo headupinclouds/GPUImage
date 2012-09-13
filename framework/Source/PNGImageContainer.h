@@ -24,7 +24,7 @@ public:
     gpu_int getHeight() const;
     gpu_int getBitsPerPixel() const;
     gpu_int getFormat() const;
-    void resize(gpu_int width, gpu_int height);
+    bool resize(gpu_int width, gpu_int height);
     unsigned char* getRawBytes() const;
 
     void destroy();

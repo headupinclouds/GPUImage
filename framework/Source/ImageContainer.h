@@ -17,7 +17,7 @@ public:
     virtual gpu_int getHeight() const = 0;
     virtual gpu_int getBitsPerPixel() const = 0;
     virtual gpu_int getFormat() const = 0;
-    virtual void resize(gpu_int width, gpu_int height) = 0;
+    virtual bool resize(gpu_int width, gpu_int height) = 0;
     virtual unsigned char* getRawBytes() const = 0;
     virtual void destroy() = 0;
 };
