@@ -9,6 +9,7 @@
 
 #include "GPUImageOutput.h"
 #include "GPUImageInput.h"
+#include <string>
 
 #define STRINGIZE(x) #x
 #define STRINGIZE2(x) STRINGIZE(x)

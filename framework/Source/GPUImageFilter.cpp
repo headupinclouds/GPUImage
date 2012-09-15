@@ -566,12 +566,16 @@ void GPUImageFilter::renderToTextureWithVertices(const GLfloat* vertices, const 
     // TODO: Remove this debug code
     gpu_float_size currentFBOSize = sizeOfFBO();
     size_t totalBytesForImage = (int)currentFBOSize.width * (int)currentFBOSize.height * 4;
-    GLubyte *rawImagePixels2 = (GLubyte *)malloc(totalBytesForImage);
+
+    GLubyte *rawImagePixels2 = new GLubyte[totalBytesForImage];
+
     glReadPixels(0, 0, (int)currentFBOSize.width, (int)currentFBOSize.height, GL_RGBA, GL_UNSIGNED_BYTE, rawImagePixels2);
     FIBITMAP* bmp = FreeImage_ConvertFromRawBits(rawImagePixels2, (int)currentFBOSize.width, (int)currentFBOSize.height, 
         4 * (int)currentFBOSize.width, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
     FreeImage_Save(FIF_PNG, bmp, "ImageFilterDump.png" , 0);
-
+    
+    delete [] rawImagePixels2;
+    // end debug code
 
 }
 

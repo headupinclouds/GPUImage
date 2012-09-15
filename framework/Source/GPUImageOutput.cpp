@@ -82,7 +82,7 @@ void GPUImageOutput::addTarget(GPUImageInput* newTarget, gpu_int textureLocation
 
 void GPUImageOutput::removeTarget(GPUImageInput* targetToRemove) {
 
-    std::vector<GPUImageInput*>::const_iterator found = std::find(targets_.begin(), targets_.end(), targetToRemove); 
+    std::vector<GPUImageInput*>::iterator found = std::find(targets_.begin(), targets_.end(), targetToRemove); 
     if(found == targets_.end()) {
         return;
     }

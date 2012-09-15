@@ -64,10 +64,10 @@ bool GLProgram::compileShader(GLuint& shader, GLenum type, const std::string& sh
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
 		
         if (logLength > 0) {
-            GLchar *log = (GLchar *)malloc(logLength);
+            GLchar *log = new GLchar[logLength];
             glGetShaderInfoLog(shader, logLength, &logLength, log);
             //NSLog(@"Shader compile log:\n%s", log);
-            free(log);
+            delete [] log;
         }
 	}	
 	
@@ -137,10 +137,10 @@ void GLProgram::validate() {
     glValidateProgram(program_);
     glGetProgramiv(program_, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength > 0) {
-        GLchar *log = (GLchar *)malloc(logLength);
+        GLchar *log = new GLchar[logLength];
         glGetProgramInfoLog(program_, logLength, &logLength, log);
         //NSLog(@"program_ validate log:\n%s", log);
-        free(log);
+        delete [] log;
     }	
 }
 
@@ -164,10 +164,10 @@ void GLProgram::logForOpenGLObject(std::string& log, GLuint object, GLInfoFuncti
     if (logLength < 1)
         return;
 
-    char *logBytes = (char*)malloc(logLength);
+    GLchar* logBytes = new GLchar[logLength];
     logFunc(object, logLength, &charsWritten, logBytes);
     log = std::string(logBytes, logLength);
-    free(logBytes);
+    delete [] logBytes;
 }
 
 void GLProgram::getVertexShaderLog(std::string& log) {

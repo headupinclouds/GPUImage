@@ -51,8 +51,8 @@ bool GPUImagePicture::initialize(ImageContainer* imageSource, bool smoothlyScale
 
     if (shouldSmoothlyScaleOutput()) {
         // In order to use mipmaps, you need to provide power-of-two textures, so convert to the next largest power of two and stretch to fill
-        float powerClosestToWidth = ceil(log2(pixelSizeOfImage_.width));
-        float powerClosestToHeight = ceil(log2(pixelSizeOfImage_.height));
+        float powerClosestToWidth = ceil(gpuimage_log2(pixelSizeOfImage_.width));
+        float powerClosestToHeight = ceil(gpuimage_log2(pixelSizeOfImage_.height));
 
         pixelSizeToUseForTexture.width  = pow(2.0f, powerClosestToWidth);
         pixelSizeToUseForTexture.height = pow(2.0f, powerClosestToHeight);

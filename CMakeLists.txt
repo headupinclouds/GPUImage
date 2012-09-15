@@ -12,6 +12,15 @@ include_directories(${EGL_INCLUDE_DIR} ${OPENGLES2_INCLUDE_DIR})
 include_directories(${FREEIMAGE_INCLUDE_DIR})
 
 ###
+#	This is needed for RPi because of this issue:
+#	https://github.com/raspberrypi/firmware/issues/34
+###
+if (RPI_BUILD)
+	find_path (VCOS_PLATFORM_TYPES_PATH vcos_platform_types.h)
+	include_directories(${VCOS_PLATFORM_TYPES_PATH})
+endif()
+
+###
 # Build Tests
 ###
 add_subdirectory(tests)

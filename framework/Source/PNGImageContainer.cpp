@@ -7,6 +7,7 @@
 #include "PNGImageContainer.h"
 #include <GLES2/gl2.h>
 #include "FreeImage.h"
+#include <algorithm>
 
 PNGImageContainer::PNGImageContainer() 
     : width_(0), height_(0), bitsPerPixel_(0), imageFormat_(0), data_(NULL), dib_(NULL) {
@@ -62,8 +63,10 @@ bool PNGImageContainer::load(const std::string& fileName) {
     BYTE* imageData = FreeImage_GetBits(dib_);
     data_ = new BYTE[bufferSize];
 
-    memcpy(data_, imageData, bufferSize);
-    
+    // we use std::copy instead of memcpy ( http://stackoverflow.com/questions/4707012/c-memcpy-vs-stdcopy )
+    //memcpy(data_, imageData, bufferSize);
+    std::copy(imageData, imageData + bufferSize, data_);
+
     return true;
 }
 
@@ -102,7 +105,9 @@ bool PNGImageContainer::resize(gpu_int width, gpu_int height) {
     BYTE* imageData = FreeImage_GetBits(dib_);
     data_ = new BYTE[bufferSize];
 
-    memcpy(data_, imageData, bufferSize);
+    // we use std::copy instead of memcpy ( http://stackoverflow.com/questions/4707012/c-memcpy-vs-stdcopy )
+    //memcpy(data_, imageData, bufferSize);
+    std::copy(imageData, imageData + bufferSize, data_);
 
     return true;
 }
