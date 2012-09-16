@@ -65,7 +65,7 @@ public:
      @param vertexShaderString Source code of the vertex shader to use
      @param fragmentShaderString Source code of the fragment shader to use
      */
-    void initWithVertexShaderFromString(const std::string& vertexShaderString, const std::string& fragmentShaderString);
+    virtual void initWithVertexShaderFromString(const std::string& vertexShaderString, const std::string& fragmentShaderString);
 
     /**
      Initialize with a fragment shader
@@ -73,16 +73,16 @@ public:
      You may take advantage of the SHADER_STRING macro to write your shader in-line.
      @param fragmentShaderString Source code of fragment shader to use
      */
-    void initWithFragmentShaderFromString(const std::string& fragmentShaderString);
+    virtual void initWithFragmentShaderFromString(const std::string& fragmentShaderString);
 
     /**
      Initialize with a fragment shader
      @param fragmentShaderFilename Filename of fragment shader to load
      */
-    void initWithFragmentShaderFromFile(const std::string& fragmentShaderFilename);
+    virtual void initWithFragmentShaderFromFile(const std::string& fragmentShaderFilename);
 
     void initializeAttributes();
-    void setupFilterForSize(gpu_float_size filterFrameSize);
+    virtual void setupFilterForSize(gpu_float_size filterFrameSize);
     gpu_float_size rotatedSize(gpu_float_size sizeToRotate, gpu_int textureIndex);
     gpu_float_point rotatedPoint(gpu_float_point pointToRotate, GPUImageRotationMode rotation);
 
@@ -143,12 +143,15 @@ public:
     static const std::string kGPUImageVertexShaderString;
     static const std::string kGPUImagePassthroughFragmentShaderString;
 
+protected: 
+    GLProgram *filterProgram_;
+    GPUImageRotationMode inputRotation_;
+ 
 private:
     GLuint filterSourceTexture_;
 
     GLuint filterFramebuffer_;
 
-    GLProgram *filterProgram_;
     GLint filterPositionAttribute_; 
     GLint filterTextureCoordinateAttribute_;
     GLint filterInputTextureUniform_;
@@ -161,7 +164,6 @@ private:
     //CVOpenGLESTextureRef renderTexture_;
     
     gpu_float_size currentFilterSize_;
-    GPUImageRotationMode inputRotation_;
 
     //CVPixelBufferRef renderTarget_;
     bool preventRendering_;
