@@ -201,6 +201,10 @@ void GPUImageOutput::forceProcessingAtSizeRespectingAspectRatio(gpu_float_size f
 
 }
 
+void GPUImageOutput::prepareForImageCapture() {
+
+}
+
 bool GPUImageOutput::shouldSmoothlyScaleOutput() {
     return shouldSmoothlyScaleOutput_;
 }

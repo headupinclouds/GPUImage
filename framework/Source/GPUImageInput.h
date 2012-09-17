@@ -14,7 +14,7 @@
 class GPUImageInput {
 public:
     virtual void newFrameReadyAtTime(gpu_time frameTime, gpu_int textureIndex) = 0;
-    virtual void setInputTexture(GLuint newInputTexture, gpu_int textureIndex) = 0;
+    virtual void setInputTexture(gpu_uint newInputTexture, gpu_int textureIndex) = 0;
     virtual gpu_int nextAvailableTextureIndex() = 0;
     virtual void setInputSize(gpu_float_size newSize, gpu_int textureIndex) = 0;
     virtual void setInputRotation(GPUImageRotationMode newInputRotation, gpu_int textureIndex) = 0;

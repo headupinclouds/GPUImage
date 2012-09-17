@@ -73,12 +73,15 @@ public:
     void forceProcessingAtSize(gpu_float_size frameSize);
     void forceProcessingAtSizeRespectingAspectRatio(gpu_float_size frameSize);
 
+    // Still images
+    virtual void prepareForImageCapture();
+
     bool shouldSmoothlyScaleOutput();
     void setShouldSmoothlyScaleOutput(bool scale);
     bool shouldIgnoreUpdatesToThisTarget();
     void setShouldIgnoreUpdatesToThisTarget(bool ignore);
     GPUImageInput* getTargetToIgnoreForUpdates();
-    void setTargetToIgnoreForUpdates(GPUImageInput* target);
+    virtual void setTargetToIgnoreForUpdates(GPUImageInput* target);
 
     void destroy();
 
