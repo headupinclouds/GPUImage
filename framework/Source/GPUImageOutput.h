@@ -25,13 +25,14 @@ class GPUImageInput;
  
  Source objects upload still image frames to OpenGL ES as textures, then hand those textures off to the next objects in the processing chain.
  */
-class GPUImageOutput {
+class GPUImageOutput 
+{
 public:
     GPUImageOutput();
     virtual ~GPUImageOutput();
 
     void setInputTextureForTarget(GPUImageInput* target, gpu_int inputTextureIndex);
-    GLuint textureForOutput();
+    virtual GLuint textureForOutput();
     void notifyTargetsAboutNewOutputTexture();
 
     /** Returns an array of the current targets.
@@ -68,8 +69,8 @@ public:
 
     /// @name Manage the output texture
 
-    void initializeOutputTexture();
-    void deleteOutputTexture();
+    virtual void initializeOutputTexture();
+    virtual void deleteOutputTexture();
     void forceProcessingAtSize(gpu_float_size frameSize);
     void forceProcessingAtSizeRespectingAspectRatio(gpu_float_size frameSize);
 

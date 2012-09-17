@@ -11,7 +11,8 @@
 #include "Common.h"
 #include <GLES2/gl2.h>
 
-class GPUImageInput {
+class GPUImageInput 
+{
 public:
     virtual void newFrameReadyAtTime(gpu_time frameTime, gpu_int textureIndex) = 0;
     virtual void setInputTexture(gpu_uint newInputTexture, gpu_int textureIndex) = 0;

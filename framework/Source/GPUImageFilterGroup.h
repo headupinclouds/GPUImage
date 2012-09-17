@@ -38,7 +38,7 @@ public:
     gpu_float_size maximumOutputSize();
     void endProcessing();
 
-private:
+protected:
     std::vector<GPUImageOutput*> filters_;
     GPUImageOutput* terminalFilter_;
     std::vector<GPUImageInput*> initialFilters_;

@@ -51,7 +51,8 @@ class GLProgram;
  
  Filters and other subsequent elements in the chain conform to the GPUImageInput protocol, which lets them take in the supplied or processed texture from the previous link in the chain and do something with it. Objects one step further down the chain are considered targets, and processing can be branched by adding multiple targets to a single output or filter.
  */
-class GPUImageFilter : public GPUImageOutput, public GPUImageInput {
+class GPUImageFilter : public GPUImageOutput, public GPUImageInput 
+{
 public:
     GPUImageFilter();
     virtual ~GPUImageFilter();
@@ -83,7 +84,7 @@ public:
 
     void initializeAttributes();
     virtual void setupFilterForSize(gpu_float_size filterFrameSize);
-    gpu_float_size rotatedSize(gpu_float_size sizeToRotate, gpu_int textureIndex);
+    virtual gpu_float_size rotatedSize(gpu_float_size sizeToRotate, gpu_int textureIndex);
     gpu_float_point rotatedPoint(gpu_float_point pointToRotate, GPUImageRotationMode rotation);
 
     void recreateFilterFBO();
@@ -92,17 +93,17 @@ public:
     /** Size of the frame buffer object
      */
     gpu_float_size sizeOfFBO();
-    void createFilterFBOofSize(gpu_float_size currentFBOSize);
+    virtual void createFilterFBOofSize(gpu_float_size currentFBOSize);
 
     /** Destroy the current filter frame buffer object
      */
-    void destroyFilterFBO();
+    virtual void destroyFilterFBO();
     void setFilterFBO();
-    void setOutputFBO();
+    virtual void setOutputFBO();
 
     /// @name Rendering
     static const GLfloat* textureCoordinatesForRotation(GPUImageRotationMode rotationMode);
-    void renderToTextureWithVertices(const GLfloat* vertices, const GLfloat* textureCoordinates, GLuint sourceTexture);
+    virtual void renderToTextureWithVertices(const GLfloat* vertices, const GLfloat* textureCoordinates, GLuint sourceTexture);
     void setUniformsForProgramAtIndex(gpu_uint programIndex);
     void informTargetsAboutNewFrameAtTime(gpu_time frameTime);
     gpu_float_size getOutputFrameSize();
@@ -146,16 +147,20 @@ public:
 protected: 
     GLProgram *filterProgram_;
     GPUImageRotationMode inputRotation_;
- 
-private:
-    GLuint filterSourceTexture_;
 
-    GLuint filterFramebuffer_;
+    bool preventRendering_;
+    
+    GLuint filterSourceTexture_;
 
     GLint filterPositionAttribute_; 
     GLint filterTextureCoordinateAttribute_;
     GLint filterInputTextureUniform_;
+
     GLfloat backgroundColorRed_, backgroundColorGreen_, backgroundColorBlue_, backgroundColorAlpha_;
+
+private:
+
+    GLuint filterFramebuffer_;
     
     bool preparedToCaptureImage_;
     
@@ -166,7 +171,6 @@ private:
     gpu_float_size currentFilterSize_;
 
     //CVPixelBufferRef renderTarget_;
-    bool preventRendering_;
 
     bool shouldIgnoreUpdatesToThisTarget_;
     bool enabled_;
