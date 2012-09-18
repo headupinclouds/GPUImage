@@ -15,7 +15,7 @@ class GPUImageTwoInputFilter : public GPUImageFilter
 {
 public:
     GPUImageTwoInputFilter();
-    ~GPUImageTwoInputFilter();
+    virtual ~GPUImageTwoInputFilter();
 
     void initWithFragmentShaderFromString(const std::string& fragmentShaderString);
     void initWithVertexShaderFromString(const std::string& vertexShaderString, const std::string& fragmentShaderString);
