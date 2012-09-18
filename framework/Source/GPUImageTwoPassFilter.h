@@ -19,7 +19,7 @@ public:
     GPUImageTwoPassFilter();
     ~GPUImageTwoPassFilter();
 
-    void initWithFirstStageVertexShaderFromString(const std::string& firstStageVertexShaderString, const std::string& firstStageFragmentShaderString, 
+    virtual void initWithFirstStageVertexShaderFromString(const std::string& firstStageVertexShaderString, const std::string& firstStageFragmentShaderString, 
         const std::string& secondStageVertexShaderString, const std::string& secondStageFragmentShaderString);
     void initWithFirstStageFragmentShaderFromString(const std::string& firstStageFragmentShaderString, const std::string& secondStageFragmentShaderString);
     void initializeSecondaryAttributes();
@@ -39,10 +39,12 @@ public:
     // other methods
     void setSecondFilterFBO();
 
+protected:
+    GLProgram* secondFilterProgram_;
+
 private:
     GLuint secondFilterOutputTexture_;
 
-    GLProgram* secondFilterProgram_;
     GLint secondFilterPositionAttribute_; 
     GLint secondFilterTextureCoordinateAttribute_;
 

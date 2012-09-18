@@ -7,6 +7,7 @@
 #include "GPUImageAdaptiveThresholdFilter.h"
 #include "GPUImageGrayscaleFilter.h"
 #include "GPUImageTwoInputFilter.h"
+#include "GPUImageBoxBlurFilter.h"
 
 const std::string GPUImageAdaptiveThresholdFilter::kGPUImageAdaptiveThresholdFragmentShaderString("\
 \

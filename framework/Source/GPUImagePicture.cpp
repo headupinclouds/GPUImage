@@ -114,7 +114,7 @@ bool GPUImagePicture::initialize(ImageContainer* imageSource, bool smoothlyScale
 
     if (shouldSmoothlyScaleOutput()) {
         glGenerateMipmap(GL_TEXTURE_2D);
-    }        
+    }
     // End runSynchronouslyOnVideoProcessingQueue block
 
     // imageData belongs to imageSource which will take care of it!

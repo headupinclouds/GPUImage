@@ -104,7 +104,7 @@ public:
     /// @name Rendering
     static const GLfloat* textureCoordinatesForRotation(GPUImageRotationMode rotationMode);
     virtual void renderToTextureWithVertices(const GLfloat* vertices, const GLfloat* textureCoordinates, GLuint sourceTexture);
-    void setUniformsForProgramAtIndex(gpu_uint programIndex);
+    virtual void setUniformsForProgramAtIndex(gpu_uint programIndex);
     void informTargetsAboutNewFrameAtTime(gpu_time frameTime);
     gpu_float_size getOutputFrameSize();
 
