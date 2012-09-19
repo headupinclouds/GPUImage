@@ -5,8 +5,11 @@
 #include "GLProgram.h"
 #include <algorithm>
 
-GLProgram::GLProgram() 
-    : initialized_(false), program_(NULL), vertexShader_(NULL), fragmentShader_(NULL) {
+GLProgram::GLProgram() : 
+    initialized_(false), 
+    program_(0), 
+    vertexShader_(0), 
+    fragmentShader_(0) {
 
 }
 
