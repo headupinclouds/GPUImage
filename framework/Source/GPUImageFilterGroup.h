@@ -38,7 +38,16 @@ public:
     gpu_float_size maximumOutputSize();
     void endProcessing();
 
+    // TODO: check where to put shouldIgnoreUpdatesToThisTarget/setShouldIgnoreUpdatesToThisTarget
+    // since they need to be here in order for derived classes to be implemented.
+    bool shouldIgnoreUpdatesToThisTarget();
+    void setShouldIgnoreUpdatesToThisTarget(bool ignore);
+    bool enabled();
+    void setEnabled(bool enable);
+
 protected:
+    bool shouldIgnoreUpdatesToThisTarget_;
+    bool enabled_;
     std::vector<GPUImageOutput*> filters_;
     GPUImageOutput* terminalFilter_;
     std::vector<GPUImageInput*> initialFilters_;

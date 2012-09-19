@@ -34,12 +34,22 @@ const std::string GPUImageFilter::kGPUImagePassthroughFragmentShaderString("\
     }"
 );
 
-GPUImageFilter::GPUImageFilter() 
-    : filterSourceTexture_(0), filterFramebuffer_(0), filterProgram_(NULL), filterPositionAttribute_(0),
-    filterTextureCoordinateAttribute_(0), filterInputTextureUniform_(0), backgroundColorRed_(0.0f), 
-    backgroundColorGreen_(0.0f), backgroundColorBlue_(0.0f), backgroundColorAlpha_(0.0f), 
-    preparedToCaptureImage_(false), inputRotation_(kGPUImageNoRotation), preventRendering_(false),
-    shouldIgnoreUpdatesToThisTarget_(false), enabled_(false) {
+GPUImageFilter::GPUImageFilter() : 
+    filterSourceTexture_(0), 
+    filterFramebuffer_(0), 
+    filterProgram_(NULL), 
+    filterPositionAttribute_(0),
+    filterTextureCoordinateAttribute_(0), 
+    filterInputTextureUniform_(0), 
+    backgroundColorRed_(0.0f), 
+    backgroundColorGreen_(0.0f), 
+    backgroundColorBlue_(0.0f), 
+    backgroundColorAlpha_(0.0f), 
+    preparedToCaptureImage_(false), 
+    inputRotation_(kGPUImageNoRotation), 
+    preventRendering_(false),
+    shouldIgnoreUpdatesToThisTarget_(false), 
+    enabled_(false) {
 
     currentFilterSize_.width = 0.0f;
     currentFilterSize_.height = 0.0f;

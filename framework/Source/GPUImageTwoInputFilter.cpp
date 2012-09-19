@@ -25,6 +25,26 @@ const std::string GPUImageTwoInputFilter::kGPUImageTwoInputTextureVertexShaderSt
  }"
 );
 
+GPUImageTwoInputFilter::GPUImageTwoInputFilter() :
+    GPUImageFilter(),
+    filterSecondTextureCoordinateAttribute_(0),
+    filterInputTextureUniform2_(0),
+    inputRotation2_(kGPUImageNoRotation),
+    filterSourceTexture2_(0),
+    //TODO: firstFrameTime_(0),
+    //TODO: secondFrameTime_(0),
+    hasSetFirstTexture_(false),
+    hasReceivedFirstFrame_(false), 
+    hasReceivedSecondFrame_(false),
+    firstFrameWasVideo_(false),
+    secondFrameWasVideo_(false) {
+
+}
+
+GPUImageTwoInputFilter::~GPUImageTwoInputFilter() {
+
+}
+
 void GPUImageTwoInputFilter::initWithFragmentShaderFromString(const std::string& fragmentShaderString) {
 
     initWithVertexShaderFromString(kGPUImageTwoInputTextureVertexShaderString, fragmentShaderString);

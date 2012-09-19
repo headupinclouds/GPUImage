@@ -3,6 +3,7 @@
 #include "GPUImagePicture.h"
 #include "PNGImageContainer.h"
 #include "GPUImageGrayScaleFilter.h"
+#include "GPUImageAmatorkaFilter.h"
 
 int main (int argc, char** argv) {
     std::cout << "GPUImage EGL Context Example" << std::endl;
@@ -35,7 +36,7 @@ int main (int argc, char** argv) {
         return -1;
     }
 
-    GPUImageGrayscaleFilter* grayscaleFilter = new GPUImageGrayscaleFilter();
+    /*GPUImageGrayscaleFilter* grayscaleFilter = new GPUImageGrayscaleFilter();
     if (!grayscaleFilter) {
         delete imageToProcess;
         delete imageSource;
@@ -44,6 +45,17 @@ int main (int argc, char** argv) {
     }
 
     imageToProcess->addTarget(grayscaleFilter);
+    imageToProcess->processImage();*/
+
+    GPUImageAmatorkaFilter* amatorkaFilter = new GPUImageAmatorkaFilter();
+    if (!amatorkaFilter) {
+        delete imageToProcess;
+        delete imageSource;
+
+        return -1;
+    }
+
+    imageToProcess->addTarget(amatorkaFilter);
     imageToProcess->processImage();
 
     return 0;

@@ -40,7 +40,11 @@ private:
     gpu_time firstFrameTime_;
     gpu_time secondFrameTime_;
     
-    bool hasSetFirstTexture_, hasReceivedFirstFrame_, hasReceivedSecondFrame_, firstFrameWasVideo_, secondFrameWasVideo_;
+    bool hasSetFirstTexture_;
+    bool hasReceivedFirstFrame_; 
+    bool hasReceivedSecondFrame_; 
+    bool firstFrameWasVideo_; 
+    bool secondFrameWasVideo_;
 };
 
 #endif // _GPUImageTwoInputFilter_h_

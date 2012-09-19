@@ -6,8 +6,12 @@
 
 #include "GPUImageFilterGroup.h"
 
-GPUImageFilterGroup::GPUImageFilterGroup() 
-    : GPUImageOutput(), terminalFilter_(NULL), inputFilterToIgnoreForUpdates_(NULL) {
+GPUImageFilterGroup::GPUImageFilterGroup() : 
+    GPUImageOutput(),
+    shouldIgnoreUpdatesToThisTarget_(false),
+    enabled_(false),
+    terminalFilter_(NULL), 
+    inputFilterToIgnoreForUpdates_(NULL) {
 
     deleteOutputTexture();
 }
@@ -148,4 +152,21 @@ void GPUImageFilterGroup::endProcessing()  {
 
         currentFilter->endProcessing();
     }
+}
+
+
+bool GPUImageFilterGroup::shouldIgnoreUpdatesToThisTarget() {
+    return shouldIgnoreUpdatesToThisTarget_;
+}
+
+void GPUImageFilterGroup::setShouldIgnoreUpdatesToThisTarget(bool ignore) {
+    shouldIgnoreUpdatesToThisTarget_ = ignore;
+}
+
+bool GPUImageFilterGroup::enabled() {
+    return enabled_;
+}
+
+void GPUImageFilterGroup::setEnabled(bool enable) {
+    enabled_ = enable;
 }
