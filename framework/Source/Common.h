@@ -26,4 +26,6 @@ typedef enum {
 #define LOG2_CONSTANT 0.69314718055994529
 #define gpuimage_log2(x) (log(x)/LOG2_CONSTANT)
 
+#define gpu_roundf(x) (floor((x) + 0.5f))
+
 #endif // _Common_h_

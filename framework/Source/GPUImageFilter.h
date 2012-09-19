@@ -158,12 +158,12 @@ protected:
 
     GLfloat backgroundColorRed_, backgroundColorGreen_, backgroundColorBlue_, backgroundColorAlpha_;
 
+    bool preparedToCaptureImage_;
+
 private:
 
     GLuint filterFramebuffer_;
-    
-    bool preparedToCaptureImage_;
-    
+        
     //CVOpenGLESTextureCacheRef filterTextureCache_;
     //CVPixelBufferRef renderTarget_;
     //CVOpenGLESTextureRef renderTexture_;
