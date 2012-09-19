@@ -10,7 +10,8 @@
 #include "Platform.h"
 #include <string>
 
-class ImageContainer {
+class ImageContainer 
+{
 public:
     virtual bool load(const std::string& fileName) = 0;
     virtual gpu_int getWidth() const = 0;

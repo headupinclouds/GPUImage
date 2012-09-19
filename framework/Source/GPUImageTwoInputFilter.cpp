@@ -194,32 +194,40 @@ void GPUImageTwoInputFilter::newFrameReadyAtTime(gpu_time frameTime, gpu_int tex
     }
     
     bool updatedMovieFrameOppositeStillImage = false;
-    /* // TODO:
+
+    // TODO: try to understand what's this if/else for. For now, set updatedMovieFrameOppositeStillImage = true;
     if (textureIndex == 0) {
         hasReceivedFirstFrame_ = true;
-        firstFrameTime = frameTime;
+
+        updatedMovieFrameOppositeStillImage = true; // TODO: remove me
+
+        /*firstFrameTime = frameTime;
         
         if (!CMTIME_IS_INDEFINITE(frameTime))
         {
             if CMTIME_IS_INDEFINITE(secondFrameTime)
             {
-                updatedMovieFrameOppositeStillImage = YES;
+                updatedMovieFrameOppositeStillImage = true;
             }
-        }
+        }*/
     }
     else
     {
-        hasReceivedSecondFrame = YES;
+        hasReceivedSecondFrame_ = true;
+
+        updatedMovieFrameOppositeStillImage = true; // TODO: remove me
+        
+        /*
         secondFrameTime = frameTime;
 
         if (!CMTIME_IS_INDEFINITE(frameTime))
         {
             if CMTIME_IS_INDEFINITE(firstFrameTime)
             {
-                updatedMovieFrameOppositeStillImage = YES;
+                updatedMovieFrameOppositeStillImage = true;
             }
-        }
-    }*/
+        }*/
+    }
     
     if ((hasReceivedFirstFrame_ && hasReceivedSecondFrame_) || updatedMovieFrameOppositeStillImage)
     {

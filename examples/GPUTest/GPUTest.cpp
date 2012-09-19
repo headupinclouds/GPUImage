@@ -58,5 +58,8 @@ int main (int argc, char** argv) {
     imageToProcess->addTarget(amatorkaFilter);
     imageToProcess->processImage();
 
+    GLubyte* buffer = amatorkaFilter->getCurrentOutputAsBuffer();
+    delete [] buffer;
+
     return 0;
 } 

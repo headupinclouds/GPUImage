@@ -12,7 +12,8 @@
 // forward declarations
 struct FIBITMAP;
 
-class PNGImageContainer : public ImageContainer {
+class PNGImageContainer : public ImageContainer 
+{
 public:
     PNGImageContainer();
     PNGImageContainer(const std::string& fileName);

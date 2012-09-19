@@ -573,7 +573,7 @@ void GPUImageFilter::renderToTextureWithVertices(const GLfloat* vertices, const 
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-    // TODO: Remove this debug code
+    /* TODO: Remove this debug code
     gpu_float_size currentFBOSize = sizeOfFBO();
     size_t totalBytesForImage = (int)currentFBOSize.width * (int)currentFBOSize.height * 4;
 
@@ -584,7 +584,7 @@ void GPUImageFilter::renderToTextureWithVertices(const GLfloat* vertices, const 
         4 * (int)currentFBOSize.width, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
     FreeImage_Save(FIF_PNG, bmp, "ImageFilterDump.png" , 0);
     
-    delete [] rawImagePixels2;
+    delete [] rawImagePixels2;*/
     // end debug code
 
 }
@@ -845,4 +845,68 @@ bool GPUImageFilter::enabled() {
 
 void GPUImageFilter::setEnabled(bool enable) {
     enabled_ = enable;
+}
+
+GLubyte* GPUImageFilter::getCurrentOutputAsBuffer() {
+
+    // TODO: schedules that block job in the thread which owns the gles context and waits for its completition
+    // TODO: Was run in a runSynchronouslyOnVideoProcessingQueue block
+    /*runSynchronouslyOnVideoProcessingQueue(^{
+        [GPUImageOpenGLESContext useImageProcessingContext];
+        
+        CGSize currentFBOSize = [self sizeOfFBO];
+        NSUInteger totalBytesForImage = (int)currentFBOSize.width * (int)currentFBOSize.height * 4;
+        // It appears that the width of a texture must be padded out to be a multiple of 8 (32 bytes) if reading from it using a texture cache
+        NSUInteger paddedWidthOfImage = CVPixelBufferGetBytesPerRow(renderTarget) / 4.0;
+        NSUInteger paddedBytesForImage = paddedWidthOfImage * (int)currentFBOSize.height * 4;
+        
+        GLubyte *rawImagePixels;
+        
+        CGDataProviderRef dataProvider;
+        if ([GPUImageOpenGLESContext supportsFastTextureUpload] && preparedToCaptureImage)
+        {
+            //        glFlush();
+            glFinish();
+            CFRetain(renderTarget); // I need to retain the pixel buffer here and release in the data source callback to prevent its bytes from being prematurely deallocated during a photo write operation
+            CVPixelBufferLockBaseAddress(renderTarget, 0);
+            self.preventRendering = YES; // Locks don't seem to work, so prevent any rendering to the filter which might overwrite the pixel buffer data until done processing
+            rawImagePixels = (GLubyte *)CVPixelBufferGetBaseAddress(renderTarget);
+            dataProvider = CGDataProviderCreateWithData((__bridge_retained void*)self, rawImagePixels, paddedBytesForImage, dataProviderUnlockCallback);
+        }
+        else
+        {
+            [self setOutputFBO];
+            rawImagePixels = (GLubyte *)malloc(totalBytesForImage);
+            glReadPixels(0, 0, (int)currentFBOSize.width, (int)currentFBOSize.height, GL_RGBA, GL_UNSIGNED_BYTE, rawImagePixels);
+            dataProvider = CGDataProviderCreateWithData(NULL, rawImagePixels, totalBytesForImage, dataProviderReleaseCallback);
+        }
+        
+        
+        CGColorSpaceRef defaultRGBColorSpace = CGColorSpaceCreateDeviceRGB();
+        
+        if ([GPUImageOpenGLESContext supportsFastTextureUpload] && preparedToCaptureImage)
+        {
+            cgImageFromBytes = CGImageCreate((int)currentFBOSize.width, (int)currentFBOSize.height, 8, 32, CVPixelBufferGetBytesPerRow(renderTarget), defaultRGBColorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst, dataProvider, NULL, NO, kCGRenderingIntentDefault);
+        }
+        else
+        {
+            cgImageFromBytes = CGImageCreate((int)currentFBOSize.width, (int)currentFBOSize.height, 8, 32, 4 * (int)currentFBOSize.width, defaultRGBColorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaLast, dataProvider, NULL, NO, kCGRenderingIntentDefault);
+        }
+        
+        // Capture image with current device orientation
+        CGDataProviderRelease(dataProvider);
+        CGColorSpaceRelease(defaultRGBColorSpace);
+    });*/
+    GPUImageOpenGLESContext::useImageProcessingContext();
+
+    gpu_float_size currentFBOSize = sizeOfFBO();
+    gpu_uint totalBytesForImage = (int)currentFBOSize.width * (int)currentFBOSize.height * 4;
+
+    GLubyte* rawImagePixels = new GLubyte[totalBytesForImage];
+    glReadPixels(0, 0, (int)currentFBOSize.width, (int)currentFBOSize.height, GL_RGBA, GL_UNSIGNED_BYTE, rawImagePixels);
+    FIBITMAP* bmp = FreeImage_ConvertFromRawBits(rawImagePixels, (int)currentFBOSize.width, (int)currentFBOSize.height, 
+        4 * (int)currentFBOSize.width, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
+    FreeImage_Save(FIF_PNG, bmp, "ImageFilterDump2.png" , 0);
+    return rawImagePixels;
+    // End runSynchronouslyOnVideoProcessingQueue block
 }

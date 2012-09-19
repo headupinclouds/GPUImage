@@ -20,11 +20,11 @@ GPUImageFilterGroup::~GPUImageFilterGroup() {
 
 }
 
-void GPUImageFilterGroup::addFilter(GPUImageOutput* newFilter) {
+void GPUImageFilterGroup::addFilter(GPUImageFilter* newFilter) {
     filters_.push_back(newFilter);
 }
 
-GPUImageOutput* GPUImageFilterGroup::filterAtIndex(gpu_uint filterIndex) {
+GPUImageFilter* GPUImageFilterGroup::filterAtIndex(gpu_uint filterIndex) {
     return filters_[filterIndex];
 }
 
@@ -32,13 +32,9 @@ int GPUImageFilterGroup::getFilterCount() {
     return filters_.size();
 }
 
-/*
-
-- (CGImageRef)newCGImageFromCurrentlyProcessedOutputWithOrientation:(UIImageOrientation)imageOrientation;
-{
-    return [self.terminalFilter newCGImageFromCurrentlyProcessedOutputWithOrientation:imageOrientation];
+GLubyte* GPUImageFilterGroup::getCurrentOutputAsBuffer() {
+    return terminalFilter_->getCurrentOutputAsBuffer();
 }
-*/
 
 void GPUImageFilterGroup::prepareForImageCapture() {
     if (terminalFilter_)

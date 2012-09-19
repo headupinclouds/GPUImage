@@ -18,11 +18,12 @@ public:
     ~GPUImageFilterGroup();
 
     // Filter management
-    void addFilter(GPUImageOutput* newFilter);
-    GPUImageOutput* filterAtIndex(gpu_uint filterIndex);
+    void addFilter(GPUImageFilter* newFilter);
+    GPUImageFilter* filterAtIndex(gpu_uint filterIndex);
     int getFilterCount();
 
-    // newCGImageFromCurrentlyProcessedOutputWithOrientation
+    // getCurrentOutput replaces original newCGImageFromCurrentlyProcessedOutputWithOrientation
+    GLubyte* getCurrentOutputAsBuffer();
     void prepareForImageCapture();
 
     void setTargetToIgnoreForUpdates(GPUImageInput* target);
@@ -48,10 +49,10 @@ public:
 protected:
     bool shouldIgnoreUpdatesToThisTarget_;
     bool enabled_;
-    std::vector<GPUImageOutput*> filters_;
-    GPUImageOutput* terminalFilter_;
-    std::vector<GPUImageInput*> initialFilters_;
-    GPUImageInput* inputFilterToIgnoreForUpdates_;
+    std::vector<GPUImageFilter*> filters_;
+    GPUImageFilter* terminalFilter_;
+    std::vector<GPUImageFilter*> initialFilters_;
+    GPUImageFilter* inputFilterToIgnoreForUpdates_;
 };
 
 #endif // _GPUImageFilterGroup_h_

@@ -141,6 +141,9 @@ public:
     bool enabled();
     void setEnabled(bool enable);
 
+    // getCurrentOutput replaces original newCGImageFromCurrentlyProcessedOutputWithOrientation
+    GLubyte* getCurrentOutputAsBuffer();
+
     static const std::string kGPUImageVertexShaderString;
     static const std::string kGPUImagePassthroughFragmentShaderString;
 
