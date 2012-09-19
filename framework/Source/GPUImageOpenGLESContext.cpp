@@ -86,7 +86,15 @@ GLProgram* GPUImageOpenGLESContext::programForVertexShaderString(const std::stri
     // no cache hit, initialize a new shader program
     if (programFromCache == NULL) {
         programFromCache = new GLProgram();
-        programFromCache->initWithVertexShaderString(vertexShaderString, fragmentShaderString);
+        
+        if (!programFromCache->initWithVertexShaderString(vertexShaderString, fragmentShaderString)) {
+            // something went terribly wrong during the initialization
+            delete programFromCache;
+            programFromCache = NULL;
+
+            return NULL;
+        }
+
         //TODO: [shaderProgramCache setObject:programFromCache forKey:lookupKeyForShaderProgram];
     }
     

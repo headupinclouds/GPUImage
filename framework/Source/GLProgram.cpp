@@ -66,7 +66,7 @@ bool GLProgram::compileShader(GLuint& shader, GLenum type, const std::string& sh
         if (logLength > 0) {
             GLchar *log = new GLchar[logLength];
             glGetShaderInfoLog(shader, logLength, &logLength, log);
-            //NSLog(@"Shader compile log:\n%s", log);
+            //TODO: NSLog(@"Shader compile log:\n%s", log);
             delete [] log;
         }
 	}	

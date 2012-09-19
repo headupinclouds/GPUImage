@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+// Added GL_APIENTRY otherwise application will crash because of the different calling conventions
 typedef void (GL_APIENTRY *GLInfoFunction)(GLuint program, GLenum pname,  GLint* params);
 typedef void (GL_APIENTRY *GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
 

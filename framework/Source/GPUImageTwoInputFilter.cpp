@@ -9,7 +9,6 @@
 #include "GLProgram.h"
 
 const std::string GPUImageTwoInputFilter::kGPUImageTwoInputTextureVertexShaderString("\
-(\
  attribute vec4 position;\
  attribute vec4 inputTextureCoordinate;\
  attribute vec4 inputTextureCoordinate2;\

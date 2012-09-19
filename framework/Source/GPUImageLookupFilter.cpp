@@ -8,10 +8,9 @@
 
 const std::string GPUImageLookupFilter::kGPUImageLookupFragmentShaderString("\
  varying highp vec2 textureCoordinate;\
- varying highp vec2 textureCoordinate2; // TODO: This is not used\
  \
  uniform sampler2D inputImageTexture;\
- uniform sampler2D inputImageTexture2; // lookup texture\
+ uniform sampler2D inputImageTexture2;\
  \
  void main()\
  {\
