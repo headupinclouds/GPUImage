@@ -57,7 +57,10 @@ int main (int argc, char** argv) {
     imageToProcess->addTarget(amatorkaFilter);
     imageToProcess->processImage();
 
+    gpu_float_size processedImageSize = amatorkaFilter->sizeOfFBO();
+
     GLubyte* buffer = amatorkaFilter->getCurrentOutputAsBuffer();
+    PNGImageContainer::writePNG("amatorkaTest.png", buffer, static_cast<gpu_int>(processedImageSize.width), static_cast<gpu_int>(processedImageSize.height), 4);
     delete [] buffer;
 
     glesContext.release();

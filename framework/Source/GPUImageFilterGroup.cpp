@@ -60,6 +60,15 @@ void GPUImageFilterGroup::removeAllTargets() {
     if (terminalFilter_)
         terminalFilter_->removeAllTargets();
 }
+
+gpu_float_size GPUImageFilterGroup::sizeOfFBO() {
+    gpu_float_size zeroSize = {0.0f, 0.0f};
+
+    if (terminalFilter_)
+        return terminalFilter_->sizeOfFBO();
+
+    return zeroSize;
+}
 /*
 - (void)setFrameProcessingCompletionBlock:(void (^)(GPUImageOutput *, CMTime))frameProcessingCompletionBlock;
 {

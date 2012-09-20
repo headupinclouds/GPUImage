@@ -31,6 +31,8 @@ public:
     void removeTarget(GPUImageInput* targetToRemove);
     void removeAllTargets();
 
+    gpu_float_size sizeOfFBO();
+
     void newFrameReadyAtTime(gpu_time frameTime, gpu_int textureIndex);
     void setInputTexture(gpu_uint newInputTexture, gpu_int textureIndex);
     gpu_int nextAvailableTextureIndex();

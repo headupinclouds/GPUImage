@@ -141,3 +141,18 @@ void PNGImageContainer::destroy() {
 
     dib_ = NULL;
 }
+
+bool PNGImageContainer::writePNG(const std::string& fileName, unsigned char* imageData, gpu_int width, gpu_int height, gpu_int bytesPerPixel) {
+    
+    FIBITMAP* bmp = FreeImage_ConvertFromRawBits(imageData, width, height, bytesPerPixel * width, 8 * bytesPerPixel, 
+        FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
+
+    if (!bmp)
+        return false;
+    
+    bool res = FreeImage_Save(FIF_PNG, bmp, "ImageFilterDump2.png" , 0);
+    
+    FreeImage_Unload(bmp);
+
+    return res;
+}
