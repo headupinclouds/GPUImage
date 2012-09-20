@@ -11,9 +11,10 @@
 #include "Common.h"
 #include <math.h>
 
-GPUImagePicture::GPUImagePicture() 
-    : GPUImageOutput(), hasProcessedImage_(false) {
-
+GPUImagePicture::GPUImagePicture() : 
+    GPUImageOutput(), 
+    hasProcessedImage_(false) 
+{
     pixelSizeOfImage_.width = 0.0f;
     pixelSizeOfImage_.height = 0.0f;
 }

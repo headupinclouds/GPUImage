@@ -57,7 +57,11 @@ const std::string GPUImageAverageColor::kGPUImageColorAveragingFragmentShaderStr
 );
 
 GPUImageAverageColor::GPUImageAverageColor() :
-    GPUImageFilter() 
+    GPUImageFilter(),
+    texelWidthUniform_(0), 
+    texelHeightUniform_(0),
+    numberOfStages_(0),
+    rawImagePixels_(NULL) 
 {
 
     GPUImageFilter::initWithVertexShaderFromString(kGPUImageColorAveragingVertexShaderString, kGPUImageColorAveragingFragmentShaderString);
@@ -73,6 +77,10 @@ GPUImageAverageColor::GPUImageAverageColor() :
     [self setFrameProcessingCompletionBlock:^(GPUImageOutput *filter, CMTime frameTime) {
         [weakSelf extractAverageColorAtFrameTime:frameTime];
     }];*/
+}
+
+GPUImageAverageColor::~GPUImageAverageColor() {
+
 }
 
 void GPUImageAverageColor::initializeOutputTexture()

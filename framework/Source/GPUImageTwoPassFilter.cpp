@@ -8,7 +8,15 @@
 #include "GPUImageOpenGLESContext.h"
 #include "GLProgram.h"
 
-GPUImageTwoPassFilter::GPUImageTwoPassFilter() {
+GPUImageTwoPassFilter::GPUImageTwoPassFilter() :
+    GPUImageFilter(),
+    secondFilterProgram_(NULL),
+    secondFilterOutputTexture_(0),
+    secondFilterPositionAttribute_(0),
+    secondFilterTextureCoordinateAttribute_(0),
+    secondFilterInputTextureUniform_(0), 
+    secondFilterInputTextureUniform2_(0),
+    secondFilterFramebuffer_(0) {
 
 }
 

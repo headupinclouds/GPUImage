@@ -63,6 +63,7 @@ const std::string GPUImageBoxBlurFilter::kGPUImageBoxBlurFragmentShaderString("\
 );
 
 GPUImageBoxBlurFilter::GPUImageBoxBlurFilter() :
+    GPUImageTwoPassTextureSamplingFilter(),
     firstBlurSizeUniform_(0),
     secondBlurSizeUniform_(0),
     blurSize_(0.0f)

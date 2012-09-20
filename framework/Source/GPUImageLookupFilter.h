@@ -39,9 +39,6 @@ public:
     ~GPUImageLookupFilter();
 
     static const std::string kGPUImageLookupFragmentShaderString;
-
-private:
-
 };
 
 #endif // _GPUImageLookupFilter_h_

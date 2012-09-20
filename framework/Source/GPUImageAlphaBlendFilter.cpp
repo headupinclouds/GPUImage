@@ -25,12 +25,10 @@ const std::string GPUImageAlphaBlendFilter::kGPUImageAlphaBlendFragmentShaderStr
  }"
 );
 
-
-//@synthesize mix = _mix;
-
 GPUImageAlphaBlendFilter::GPUImageAlphaBlendFilter() :
-mix_(0.0),
-mixUniform_(0) 
+    GPUImageTwoInputFilter(),
+    mix_(0.0),
+    mixUniform_(0) 
 {
 
     GPUImageTwoInputFilter::initWithFragmentShaderFromString(kGPUImageAlphaBlendFragmentShaderString);

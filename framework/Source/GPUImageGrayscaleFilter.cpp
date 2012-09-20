@@ -25,7 +25,9 @@ const std::string GPUImageGrayscaleFilter::kGPUImageLuminanceFragmentShaderStrin
  }"
 );
 
-GPUImageGrayscaleFilter::GPUImageGrayscaleFilter() {
+GPUImageGrayscaleFilter::GPUImageGrayscaleFilter() :
+    GPUImageFilter()
+{
     initWithFragmentShaderFromString(kGPUImageLuminanceFragmentShaderString);
 }
 

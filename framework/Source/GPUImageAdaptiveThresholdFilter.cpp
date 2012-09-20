@@ -29,8 +29,10 @@ const std::string GPUImageAdaptiveThresholdFilter::kGPUImageAdaptiveThresholdFra
  }"
 );
 
-GPUImageAdaptiveThresholdFilter::GPUImageAdaptiveThresholdFilter() 
-    : GPUImageFilterGroup(), blurSize_(0), boxBlurFilter_(NULL) {
+GPUImageAdaptiveThresholdFilter::GPUImageAdaptiveThresholdFilter() : 
+    GPUImageFilterGroup(), 
+    blurSize_(0), 
+    boxBlurFilter_(NULL) {
 
     // First pass: reduce to luminance
     GPUImageGrayscaleFilter* luminanceFilter = new GPUImageGrayscaleFilter();
@@ -53,7 +55,10 @@ GPUImageAdaptiveThresholdFilter::GPUImageAdaptiveThresholdFilter()
     
     initialFilters_.push_back(luminanceFilter);
     terminalFilter_ = adaptiveThresholdFilter;
-    
+}
+
+GPUImageAdaptiveThresholdFilter::~GPUImageAdaptiveThresholdFilter() {
+
 }
 
 void GPUImageAdaptiveThresholdFilter::setBlurSize(gpu_float newValue) {

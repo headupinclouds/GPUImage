@@ -44,7 +44,8 @@ const std::string GPUImageAddBlendFilter::kGPUImageAddBlendFragmentShaderString(
 	 gl_FragColor = vec4(r, g, b, a);\
  }");
 
-GPUImageAddBlendFilter::GPUImageAddBlendFilter() {
+GPUImageAddBlendFilter::GPUImageAddBlendFilter() :
+    GPUImageTwoInputFilter() {
 
     GPUImageTwoInputFilter::initWithFragmentShaderFromString(kGPUImageAddBlendFragmentShaderString);
 }

@@ -7,7 +7,16 @@
 #include "GPUImageTwoPassTextureSamplingFilter.h"
 #include "GLProgram.h"
 
-GPUImageTwoPassTextureSamplingFilter::GPUImageTwoPassTextureSamplingFilter() {
+GPUImageTwoPassTextureSamplingFilter::GPUImageTwoPassTextureSamplingFilter() :
+    GPUImageTwoPassFilter(),
+    verticalPassTexelWidthOffsetUniform_(0), 
+    verticalPassTexelHeightOffsetUniform_(0),
+    horizontalPassTexelWidthOffsetUniform_(0),
+    horizontalPassTexelHeightOffsetUniform_(0),
+    verticalPassTexelWidthOffset_(0.0f),
+    verticalPassTexelHeightOffset_(0.0f),
+    horizontalPassTexelWidthOffset_(0.0f),
+    horizontalPassTexelHeightOffset_(0.0f) {
 
 }
 

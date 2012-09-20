@@ -46,8 +46,9 @@ const std::string GPUImage3x3ConvolutionFilter::kGPUImage3x3ConvolutionFragmentS
  }"
 );
 
-GPUImage3x3ConvolutionFilter::GPUImage3x3ConvolutionFilter() 
-    : GPUImage3x3TextureSamplingFilter(), convolutionMatrixUniform_(0) {
+GPUImage3x3ConvolutionFilter::GPUImage3x3ConvolutionFilter() : 
+    GPUImage3x3TextureSamplingFilter(), 
+    convolutionMatrixUniform_(0) {
     
     initWithFragmentShaderFromString(kGPUImage3x3ConvolutionFragmentShaderString);
     
