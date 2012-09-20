@@ -28,4 +28,9 @@ typedef enum {
 
 #define gpu_roundf(x) (floor((x) + 0.5f))
 
+/// INPLACESWAP adopted from codeguru.com (taken from FreeImage)
+template <class T> void INPLACESWAP(T& a, T& b) {
+	a ^= b; b ^= a; a ^= b;
+}
+
 #endif // _Common_h_

@@ -6,16 +6,17 @@
 
 #include "PNGImageContainer.h"
 #include <GLES2/gl2.h>
-#include "FreeImage.h"
 #include <algorithm>
+#include "FreeImage.h"
+#include "Common.h"
 
 PNGImageContainer::PNGImageContainer() 
-    : width_(0), height_(0), bitsPerPixel_(0), imageFormat_(0), data_(NULL), dib_(NULL) {
+    : width_(0), height_(0), bytesPerPixel_(0), imageFormat_(0), data_(NULL), dib_(NULL) {
 
 }
 
 PNGImageContainer::PNGImageContainer(const std::string& fileName) 
-    : width_(0), height_(0), bitsPerPixel_(0), imageFormat_(0), data_(NULL), dib_(NULL) {
+    : width_(0), height_(0), bytesPerPixel_(0), imageFormat_(0), data_(NULL), dib_(NULL) {
     
     load(fileName);
 }
@@ -45,7 +46,7 @@ bool PNGImageContainer::load(const std::string& fileName) {
 
     width_ = FreeImage_GetWidth(dib_);
     height_ = FreeImage_GetHeight(dib_);
-    bitsPerPixel_ = FreeImage_GetBPP(dib_) / 8;
+    bytesPerPixel_ = FreeImage_GetBPP(dib_) / 8;
 
     // TODO: should this always report FIC_RGBALPHA because of the ConvertTo32Bits?
     /*switch(type) {
@@ -58,9 +59,22 @@ bool PNGImageContainer::load(const std::string& fileName) {
     }*/
     imageFormat_ = GL_RGBA;
 
-    size_t bufferSize = width_ * height_ * bitsPerPixel_;
+    size_t bufferSize = width_ * height_ * bytesPerPixel_;
 
     BYTE* imageData = FreeImage_GetBits(dib_);
+    BYTE* imagePointer = imageData;
+
+    // Convert the image from BGRA to RGBA using the CPU, since FreeImage loads images to BGR
+    // Taken from Conversion.cpp (FreeImage Library), SwapRedBlue32()
+	const unsigned pitch = FreeImage_GetPitch(dib_);
+	const unsigned lineSize = FreeImage_GetLine(dib_);
+
+	for(unsigned y = 0; y < height_; ++y, imagePointer += pitch) {
+		for(BYTE* pixel = imagePointer; pixel < imagePointer + lineSize; pixel += bytesPerPixel_) {
+			INPLACESWAP(pixel[0], pixel[2]);
+		}
+	}   
+
     data_ = new BYTE[bufferSize];
 
     // we use std::copy instead of memcpy ( http://stackoverflow.com/questions/4707012/c-memcpy-vs-stdcopy )
@@ -79,7 +93,7 @@ gpu_int PNGImageContainer::getHeight() const {
 }
 
 gpu_int PNGImageContainer::getBitsPerPixel() const {
-    return bitsPerPixel_;
+    return bytesPerPixel_;
 }
 
 gpu_int PNGImageContainer::getFormat() const {
@@ -101,7 +115,7 @@ bool PNGImageContainer::resize(gpu_int width, gpu_int height) {
     height_ = height;
 
     // extract image bits
-    size_t bufferSize = width_ * height_ * bitsPerPixel_;
+    size_t bufferSize = width_ * height_ * bytesPerPixel_;
     BYTE* imageData = FreeImage_GetBits(dib_);
     data_ = new BYTE[bufferSize];
 

@@ -13,7 +13,6 @@ int main (int argc, char** argv) {
     glesContext.getContext();
     std::cout << "maximumTextureSizeForThisDevice():  " << glesContext.maximumTextureSizeForThisDevice() << std::endl;
     std::cout << "maximumTextureUnitsForThisDevice(): " << glesContext.maximumTextureUnitsForThisDevice() << std::endl;
-    glesContext.release();
 
     PNGImageContainer* imageSource = new PNGImageContainer();
     if (!imageSource)
@@ -60,6 +59,8 @@ int main (int argc, char** argv) {
 
     GLubyte* buffer = amatorkaFilter->getCurrentOutputAsBuffer();
     delete [] buffer;
+
+    glesContext.release();
 
     return 0;
 } 

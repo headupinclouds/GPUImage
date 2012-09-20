@@ -33,7 +33,7 @@ public:
 private:
     gpu_int width_;
     gpu_int height_;
-    gpu_int bitsPerPixel_;
+    gpu_int bytesPerPixel_;
     gpu_int imageFormat_;
 
     unsigned char* data_;
