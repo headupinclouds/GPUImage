@@ -150,7 +150,7 @@ bool PNGImageContainer::writePNG(const std::string& fileName, unsigned char* ima
     if (!bmp)
         return false;
     
-    bool res = FreeImage_Save(FIF_PNG, bmp, "ImageFilterDump2.png" , 0);
+    bool res = FreeImage_Save(FIF_PNG, bmp, fileName.c_str(), 0);
     
     FreeImage_Unload(bmp);
 
