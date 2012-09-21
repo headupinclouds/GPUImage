@@ -11,36 +11,40 @@
 
 GPUImageAmatorkaFilter::GPUImageAmatorkaFilter() :
     GPUImageFilterGroup(),
-    image_(NULL),
     lookupImageSource_(NULL) 
 {
 
-    image_ = new PNGImageContainer();
-    if (!image_) {
+    PNGImageContainer* imageSource = new PNGImageContainer();
+    if (!imageSource) {
         // TODO: log error
         return;
     }
 
-    if (!image_->load("lookup_amatorka.png")) {
+    if (!imageSource->load("lookup_amatorka.png")) {
         //TODO: NSAssert(image, @"To use GPUImageAmatorkaFilter you need to add lookup_amatorka.png from GPUImage/framework/Resources to your application bundle.");
-        delete image_;
+        delete imageSource;
+        imageSource = NULL;
         return;
     }
-
     
     lookupImageSource_ = new GPUImagePicture();
     if (!lookupImageSource_) {
-        // TODO: log error
+        // TODO: log error        
+        delete imageSource;
+        imageSource = NULL;
         return;
     }
 
-    lookupImageSource_->initialize(image_);
+    lookupImageSource_->initialize(imageSource);
+
+    // delete the imageloader since lookupImageSource_ owns a copy of the loaded data buffer
+    delete imageSource;
+    imageSource = NULL;
     
     GPUImageLookupFilter* lookupFilter = new GPUImageLookupFilter();
     if (!lookupFilter) {
         // TODO: log error
         delete lookupImageSource_;
-        delete image_;
         return;
     }
 
@@ -52,5 +56,6 @@ GPUImageAmatorkaFilter::GPUImageAmatorkaFilter() :
 }
 
 GPUImageAmatorkaFilter::~GPUImageAmatorkaFilter() {
-
+    
+    //if (
 }

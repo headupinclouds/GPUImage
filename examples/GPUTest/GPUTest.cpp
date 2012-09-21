@@ -44,7 +44,17 @@ int main (int argc, char** argv) {
     }
 
     imageToProcess->addTarget(grayscaleFilter);
-    imageToProcess->processImage();*/
+    imageToProcess->processImage();
+
+    gpu_float_size processedImageSize = grayscaleFilter->sizeOfFBO();
+
+    GLubyte* buffer = grayscaleFilter->getCurrentOutputAsBuffer();
+    PNGImageContainer::writePNG("greyscale.png", buffer, static_cast<gpu_int>(processedImageSize.width), static_cast<gpu_int>(processedImageSize.height), 4);
+    delete [] buffer;    
+
+    delete imageToProcess;
+    delete imageSource;
+    delete grayscaleFilter;*/
 
     GPUImageAmatorkaFilter* amatorkaFilter = new GPUImageAmatorkaFilter();
     if (!amatorkaFilter) {
@@ -62,6 +72,10 @@ int main (int argc, char** argv) {
     GLubyte* buffer = amatorkaFilter->getCurrentOutputAsBuffer();
     PNGImageContainer::writePNG("amatorkaTest.png", buffer, static_cast<gpu_int>(processedImageSize.width), static_cast<gpu_int>(processedImageSize.height), 4);
     delete [] buffer;
+    
+    delete imageToProcess;
+    delete imageSource;
+    delete amatorkaFilter;
 
     glesContext.release();
 

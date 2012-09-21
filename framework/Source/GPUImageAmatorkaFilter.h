@@ -27,7 +27,6 @@ public:
     ~GPUImageAmatorkaFilter();
 
 private:
-    PNGImageContainer* image_;
     GPUImagePicture* lookupImageSource_;
 };
 

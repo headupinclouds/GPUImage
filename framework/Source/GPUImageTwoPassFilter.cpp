@@ -21,7 +21,11 @@ GPUImageTwoPassFilter::GPUImageTwoPassFilter() :
 }
 
 GPUImageTwoPassFilter::~GPUImageTwoPassFilter() {
+    
+    if (secondFilterProgram_)
+        delete secondFilterProgram_;
 
+    secondFilterProgram_ = NULL;
 }
 
 void GPUImageTwoPassFilter::initWithFirstStageVertexShaderFromString(const std::string& firstStageVertexShaderString, const std::string& firstStageFragmentShaderString, 

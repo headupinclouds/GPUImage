@@ -58,6 +58,11 @@ GPUImageFilter::GPUImageFilter() :
 
 GPUImageFilter::~GPUImageFilter() {
     destroyFilterFBO();
+
+    if (filterProgram_)
+        delete filterProgram_;
+
+    filterProgram_ = NULL;
 }
 
 void GPUImageFilter::initWithVertexShaderFromString(const std::string& vertexShaderString, const std::string& fragmentShaderString) {
