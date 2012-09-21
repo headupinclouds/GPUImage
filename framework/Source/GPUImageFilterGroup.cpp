@@ -17,7 +17,8 @@ GPUImageFilterGroup::GPUImageFilterGroup() :
 }
 
 GPUImageFilterGroup::~GPUImageFilterGroup() {
-
+    removeAllTargets();
+    removeAllFilters();
 }
 
 void GPUImageFilterGroup::addFilter(GPUImageFilter* newFilter) {
@@ -30,6 +31,10 @@ GPUImageFilter* GPUImageFilterGroup::filterAtIndex(gpu_uint filterIndex) {
 
 int GPUImageFilterGroup::getFilterCount() {
     return filters_.size();
+}
+
+void GPUImageFilterGroup::removeAllFilters() {
+    filters_.clear();
 }
 
 GLubyte* GPUImageFilterGroup::getCurrentOutputAsBuffer() {

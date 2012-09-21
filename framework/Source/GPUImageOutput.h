@@ -61,11 +61,11 @@ public:
      
      @param targetToRemove Target to be removed
      */
-    void removeTarget(GPUImageInput* targetToRemove);
+    virtual void removeTarget(GPUImageInput* targetToRemove);
 
     /** Removes all targets.
      */
-    void removeAllTargets();
+    virtual void removeAllTargets();
 
     /// @name Manage the output texture
 

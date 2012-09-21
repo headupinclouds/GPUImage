@@ -17,7 +17,7 @@ class GPUImageTwoPassFilter : public GPUImageFilter
 {
 public:
     GPUImageTwoPassFilter();
-    ~GPUImageTwoPassFilter();
+    virtual ~GPUImageTwoPassFilter();
 
     virtual void initWithFirstStageVertexShaderFromString(const std::string& firstStageVertexShaderString, const std::string& firstStageFragmentShaderString, 
         const std::string& secondStageVertexShaderString, const std::string& secondStageFragmentShaderString);

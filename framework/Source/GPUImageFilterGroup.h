@@ -21,6 +21,7 @@ public:
     void addFilter(GPUImageFilter* newFilter);
     GPUImageFilter* filterAtIndex(gpu_uint filterIndex);
     int getFilterCount();
+    void removeAllFilters();
 
     // getCurrentOutput replaces original newCGImageFromCurrentlyProcessedOutputWithOrientation
     GLubyte* getCurrentOutputAsBuffer();

@@ -57,5 +57,17 @@ GPUImageAmatorkaFilter::GPUImageAmatorkaFilter() :
 
 GPUImageAmatorkaFilter::~GPUImageAmatorkaFilter() {
     
-    //if (
+    GPUImageFilterGroup::removeAllTargets();
+
+    if (lookupImageSource_)
+        delete lookupImageSource_;
+
+    lookupImageSource_ = NULL;
+
+    // terminalFilter_ holds a GPUImageLookupFilter instance
+    if (terminalFilter_)
+        delete terminalFilter_;
+
+    terminalFilter_ = NULL;
+    initialFilters_.clear();
 }

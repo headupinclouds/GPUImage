@@ -4,6 +4,9 @@
  *
  */
 
+#ifndef _GPUImagePicture_h_
+#define _GPUImagePicture_h_
+
 #include "GPUImageOutput.h"
 
 // forward declarations
@@ -27,10 +30,4 @@ private:
     bool hasProcessedImage_;
 };
 
-#ifdef portcode
-// Initialization and teardown
-- (id)initWithImage:(UIImage *)newImageSource;
-- (id)initWithCGImage:(CGImageRef)newImageSource;
-- (id)initWithImage:(UIImage *)newImageSource smoothlyScaleOutput:(BOOL)smoothlyScaleOutput;
-- (id)initWithCGImage:(CGImageRef)newImageSource smoothlyScaleOutput:(BOOL)smoothlyScaleOutput;
-#endif
+#endif // _GPUImagePicture_h_
