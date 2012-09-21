@@ -75,7 +75,7 @@ public:
      */
     virtual void initWithFragmentShaderFromFile(const std::string& fragmentShaderFilename);
 
-    void initializeAttributes();
+    virtual void initializeAttributes();
     virtual void setupFilterForSize(gpu_float_size filterFrameSize);
     virtual gpu_float_size rotatedSize(gpu_float_size sizeToRotate, gpu_int textureIndex);
     gpu_float_point rotatedPoint(gpu_float_point pointToRotate, GPUImageRotationMode rotation);
