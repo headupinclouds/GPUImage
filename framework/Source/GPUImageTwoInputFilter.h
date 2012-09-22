@@ -20,7 +20,7 @@ public:
     void initWithFragmentShaderFromString(const std::string& fragmentShaderString);
     void initWithVertexShaderFromString(const std::string& vertexShaderString, const std::string& fragmentShaderString);
     void initializeAttributes();
-    void renderToTextureWithVertices(const GLfloat* vertices, const GLfloat* textureCoordinates, GLuint sourceTexture);
+    virtual void renderToTextureWithVertices(const GLfloat* vertices, const GLfloat* textureCoordinates, GLuint sourceTexture);
 
     // from GPUImageFilter
     gpu_int nextAvailableTextureIndex();
