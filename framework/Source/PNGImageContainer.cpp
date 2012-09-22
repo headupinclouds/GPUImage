@@ -69,7 +69,7 @@ bool PNGImageContainer::load(const std::string& fileName) {
 	const unsigned pitch = FreeImage_GetPitch(dib_);
 	const unsigned lineSize = FreeImage_GetLine(dib_);
 
-	for(unsigned y = 0; y < height_; ++y, imagePointer += pitch) {
+	for(int y = 0; y < height_; ++y, imagePointer += pitch) {
 		for(BYTE* pixel = imagePointer; pixel < imagePointer + lineSize; pixel += bytesPerPixel_) {
 			INPLACESWAP(pixel[0], pixel[2]);
 		}
@@ -142,17 +142,39 @@ void PNGImageContainer::destroy() {
     dib_ = NULL;
 }
 
-bool PNGImageContainer::writePNG(const std::string& fileName, unsigned char* imageData, gpu_int width, gpu_int height, gpu_int bytesPerPixel) {
+bool PNGImageContainer::writePNG(const std::string& fileName, const unsigned char* imageData, gpu_int width, gpu_int height, gpu_int bytesPerPixel) {
     
-    FIBITMAP* bmp = FreeImage_ConvertFromRawBits(imageData, width, height, bytesPerPixel * width, 8 * bytesPerPixel, 
+    // make a copy of the buffer
+    size_t bufferSize = width * height * bytesPerPixel;
+    BYTE* imageDataCopy = new BYTE[bufferSize];
+    std::copy(imageData, imageData + bufferSize, imageDataCopy);
+    
+    // Convert RGBA to BGRA: imageData is expected to be RGBA
+    BYTE* imagePointer = imageDataCopy;
+	const unsigned lineSize = width * bytesPerPixel;
+	const unsigned pitch = lineSize;
+
+	for(int y = 0; y < height; ++y, imagePointer += pitch) {
+		for(BYTE* pixel = imagePointer; pixel < imagePointer + lineSize; pixel += bytesPerPixel) {
+			INPLACESWAP(pixel[0], pixel[2]);
+		}
+	} 
+
+    // create a FIBITMAP descriptor out of the image data
+    FIBITMAP* bmp = FreeImage_ConvertFromRawBits(imageDataCopy, width, height, bytesPerPixel * width, 8 * bytesPerPixel, 
         FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
 
-    if (!bmp)
+    if (!bmp) {
+        delete imageDataCopy;    
         return false;
-    
+    }
+
+    // FreeImage_Save expects a BGRA bufferr
     bool res = FreeImage_Save(FIF_PNG, bmp, fileName.c_str(), 0);
     
+    // free used memory
     FreeImage_Unload(bmp);
+    delete imageDataCopy;    
 
     return res;
 }

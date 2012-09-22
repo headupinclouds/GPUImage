@@ -4,6 +4,7 @@
 #include "PNGImageContainer.h"
 #include "GPUImageGrayScaleFilter.h"
 #include "GPUImageAmatorkaFilter.h"
+#include "GPUImageMaskFilter.h"
 
 int main (int argc, char** argv) {
     std::cout << "GPUImage EGL Context Example" << std::endl;
@@ -76,6 +77,64 @@ int main (int argc, char** argv) {
     delete imageToProcess;
     delete imageSource;
     delete amatorkaFilter;
+
+/*
+    // load the mask file
+    PNGImageContainer* maskFile = new PNGImageContainer();
+    if (!maskFile){
+        delete imageToProcess;
+        delete imageSource;
+
+        return -1;
+    }
+    if (!maskFile->load("mask.png")) {
+        delete maskFile;
+        delete imageToProcess;
+        delete imageSource;
+
+        return -1;
+    }
+
+    GPUImagePicture* maskSource = new GPUImagePicture();
+    if (!maskSource)
+        return -1;
+
+    if (!maskSource->initialize(maskFile, true)) {
+        delete maskSource;
+        delete maskFile;
+        delete imageToProcess;
+        delete imageSource;
+
+        return -1;
+    }
+
+    GPUImageMaskFilter* maskFilter = new GPUImageMaskFilter();
+    if (!maskFilter) {
+        delete maskSource;
+        delete maskFile;
+        delete imageToProcess;
+        delete imageSource;
+
+        return -1;
+    }
+
+    imageToProcess->addTarget(maskFilter);
+    //maskSource->processImage();
+    maskSource->addTarget(maskFilter);
+
+    imageToProcess->processImage();
+
+    gpu_float_size processedImageSize = maskFilter->sizeOfFBO();
+
+    GLubyte* buffer = maskFilter->getCurrentOutputAsBuffer();
+    PNGImageContainer::writePNG("maskTest.png", buffer, static_cast<gpu_int>(processedImageSize.width), static_cast<gpu_int>(processedImageSize.height), 4);
+    delete [] buffer;
+
+    delete imageToProcess;
+    delete imageSource;
+    delete maskFile;
+    delete maskSource;
+    delete maskFilter;*/
 
     glesContext.release();
 

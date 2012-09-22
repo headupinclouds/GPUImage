@@ -30,7 +30,7 @@ public:
 
     void destroy();
 
-    static bool writePNG(const std::string& fileName, unsigned char* imageData, gpu_int width, gpu_int height, gpu_int bytesPerPixel); 
+    static bool writePNG(const std::string& fileName, const unsigned char* imageData, gpu_int width, gpu_int height, gpu_int bytesPerPixel); 
 
 private:
     gpu_int width_;
