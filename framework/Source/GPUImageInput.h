@@ -9,7 +9,7 @@
  
 #include "Platform.h"
 #include "Common.h"
-#include <GLES2/gl2.h>
+#include "GPUImageOpenGL.h"
 
 class GPUImageInput 
 {

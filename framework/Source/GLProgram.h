@@ -8,9 +8,13 @@
 #ifndef _GLProgram_h_
 #define _GLProgram_h_
 
-#include <GLES2/gl2.h>
+//#include <GLES2/gl2.h>
+#include "GPUImageOpenGL.h"
+
 #include <string>
 #include <vector>
+
+#define GL_APIENTRY
 
 // Added GL_APIENTRY otherwise application will crash because of the different calling conventions
 typedef void (GL_APIENTRY *GLInfoFunction)(GLuint program, GLenum pname,  GLint* params);

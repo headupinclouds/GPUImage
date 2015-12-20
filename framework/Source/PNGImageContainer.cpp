@@ -5,7 +5,7 @@
  */
 
 #include "PNGImageContainer.h"
-#include <GLES2/gl2.h>
+#include "GPUImageOpenGL.h"
 #include <algorithm>
 #include "FreeImage.h"
 #include "Common.h"

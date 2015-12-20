@@ -9,9 +9,15 @@
 
 #include "Platform.h"
 #include "Common.h"
-#include <GLES2/gl2.h>
-#include <EGL/egl.h>
+#include "GPUImageOpenGL.h"
+//#include <EGL/egl.h>
 #include <string>
+
+// TODO: These need to be defined in a cross platform way
+//EGLBoolean
+//EGLDisplay
+//EGLSurface
+//EGLContext
 
 // Forward Declarations
 class GLProgram;

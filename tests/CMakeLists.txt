@@ -1,3 +1,6 @@
+hunter_add_package(GTest)
+find_package(GTest CONFIG REQUIRED)
+
 if(GTEST_FOUND)
     set(BUILD_TESTS_ENABLED_DEFAULT ON)
 else(GTEST_FOUND)
