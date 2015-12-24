@@ -27,7 +27,7 @@ sugar_files(
     GPUImageGrayscaleFilter.cpp
     GPUImageLookupFilter.cpp
     GPUImageMaskFilter.cpp
-    GPUImageOpenGLESContext.cpp
+#    GPUImageOpenGLESContext.cpp
     GPUImageOutput.cpp
     GPUImagePicture.cpp
     GPUImageTwoInputFilter.cpp
@@ -57,7 +57,7 @@ sugar_files(
     GPUImageInput.h
     GPUImageLookupFilter.h
     GPUImageMaskFilter.h
-    GPUImageOpenGLESContext.h
+	#    GPUImageOpenGLESContext.h
     GPUImageOutput.h
     GPUImagePicture.h
     GPUImageTwoInputFilter.h
